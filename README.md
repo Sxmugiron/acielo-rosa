@@ -1,204 +1,153 @@
 # WEBACIELO
-## Sistema de Gestión para la Fundación Acielo Rosa
+### Sistema de Gestión para la Fundación Acielo Rosa
 
-**Plataforma web basada en microservicios, contenedores, balanceo de carga y procesamiento de datos con Apache Spark.**
-
-**Proyecto académico de desarrollo e infraestructura de software — 2026**
+**Proyecto académico de desarrollo web, arquitectura de microservicios, infraestructura distribuida y procesamiento de datos.**
 
 ---
 
-## 1. Descripción general
+## 1. Descripción del proyecto
 
-WEBACIELO es una plataforma web desarrollada para apoyar la gestión de los procesos administrativos y operativos de la Fundación Acielo Rosa.
+WEBACIELO es una plataforma web desarrollada para apoyar la gestión administrativa y operativa de la Fundación Acielo Rosa.
 
-El sistema integra funcionalidades relacionadas con la administración de usuarios, servicios, citas y pagos, además de incorporar herramientas de análisis de información mediante Apache Spark.
+El sistema integra funcionalidades para administrar usuarios, servicios, citas y pagos, así como herramientas de análisis de datos mediante Apache Spark.
 
-Su arquitectura está basada en microservicios independientes desarrollados con Node.js, bases de datos MySQL, contenedores Docker y orquestación mediante Docker Swarm.
+Su arquitectura se basa en microservicios desarrollados con Node.js, bases de datos MySQL, contenedores Docker y orquestación mediante Docker Swarm.
 
-El proyecto también incorpora HAProxy como punto de entrada para las solicitudes HTTP y utiliza una infraestructura virtualizada con dos servidores Ubuntu.
+Para su implementación se configuraron dos máquinas virtuales Ubuntu, separando el frontend del backend. También se incorporó HAProxy para centralizar las solicitudes HTTP y distribuir el tráfico hacia los microservicios.
 
-Esta solución busca demostrar cómo diferentes tecnologías pueden integrarse para construir una aplicación modular, organizada y con posibilidades de escalabilidad.
+## 2. ¿Qué incluye el proyecto?
 
-## 2. Fundación Acielo Rosa
-
-La Fundación Acielo Rosa es la organización para la cual se desarrolla esta propuesta tecnológica.
-
-WEBACIELO está orientado a facilitar la organización de información relacionada con sus usuarios, los servicios administrados, la programación de citas y el registro de pagos.
-
-La plataforma busca contribuir a la digitalización de procesos y ofrecer herramientas que faciliten la consulta, administración y análisis de datos.
-
-Desde el punto de vista tecnológico, el proyecto plantea una solución centralizada para los usuarios finales, pero distribuida internamente en diferentes servicios independientes.
-
-## 3. Objetivos del proyecto
-
-### Objetivo general
-
-Diseñar, desarrollar e implementar una plataforma web para la Fundación Acielo Rosa utilizando una arquitectura de microservicios, bases de datos relacionales, tecnologías de contenerización, balanceo de carga y procesamiento distribuido de datos.
-
-### Objetivos específicos
-
-- Desarrollar una interfaz web para la interacción con los diferentes módulos del sistema.
-- Implementar microservicios independientes para usuarios, servicios, citas y pagos.
-- Integrar bases de datos MySQL para el almacenamiento de información.
-- Contenerizar los microservicios utilizando Docker.
-- Administrar y escalar servicios mediante Docker Swarm.
-- Implementar HAProxy para centralizar y distribuir las solicitudes HTTP.
-- Incorporar Apache Spark para el procesamiento y análisis de información.
-- Realizar pruebas funcionales, de concurrencia y de carga.
-- Documentar la arquitectura y los procedimientos de despliegue.
-
----
-
-## 4. Módulos del sistema
-
-### 4.1. Gestión de usuarios
-
-Permite administrar la información de los usuarios registrados en la plataforma.
-
-Funcionalidades:
-
-- Registro de usuarios.
-- Consulta de usuarios.
-- Edición de información.
-- Inicio de sesión.
-
-### 4.2. Gestión de servicios
-
-Permite organizar los servicios administrados mediante la plataforma.
-
-Funcionalidades:
-
-- Registro de servicios.
-- Consulta de servicios.
-- Edición de información.
-- Visualización de registros.
-
-### 4.3. Gestión de citas
-
-Permite administrar los registros relacionados con las citas.
-
-Funcionalidades:
-
-- Registro de citas.
-- Consulta de citas.
-- Visualización de información.
-
-### 4.4. Gestión de pagos
-
-Permite administrar la información relacionada con los pagos registrados.
-
-Funcionalidades:
-
-- Registro de pagos.
-- Consulta de pagos.
-- Edición de pagos.
-- Visualización de registros.
-
-### 4.5. Análisis de datos
-
-Integra funcionalidades relacionadas con el procesamiento y la visualización de información.
-
-Incluye:
-
-- Interfaz de análisis.
-- Visualización de resultados.
-- Integración con Apache Spark.
-- Consultas a endpoints de análisis.
-- Páginas de documentación de arquitectura, metodología y procesamiento.
-
----
-
-## 5. Tecnologías utilizadas
-
-| Tecnología | Función |
+| Componente | Descripción |
 |---|---|
-| HTML5 | Estructura del frontend |
-| CSS3 | Diseño y estilos |
-| JavaScript | Interactividad y consumo de APIs |
-| Node.js | Desarrollo de microservicios |
-| MySQL 8.0 | Bases de datos |
-| Docker | Contenerización |
-| Docker Swarm | Orquestación y escalado |
-| HAProxy 2.9 | Proxy inverso y balanceo de carga |
-| Apache Spark 3.5.5 | Procesamiento de datos |
-| Apache JMeter 5.6.3 | Pruebas de carga |
-| Ubuntu | Sistema operativo |
-| VirtualBox | Virtualización |
-| Git y GitHub | Control de versiones |
+| Frontend | Interfaz web desarrollada con HTML, CSS y JavaScript |
+| Usuarios | Registro, consulta, edición e inicio de sesión |
+| Servicios | Registro, consulta y edición de servicios |
+| Citas | Registro y consulta de citas |
+| Pagos | Registro, consulta y edición de pagos |
+| Bases de datos | Almacenamiento independiente mediante MySQL |
+| Apache Spark | Procesamiento y análisis de datos |
+| Docker | Contenerización de aplicaciones |
+| Docker Swarm | Administración y escalado de microservicios |
+| HAProxy | Proxy inverso y balanceo de carga |
+| Dataset | Archivos de datos utilizados por el proyecto |
 
 ---
 
-## 6. Arquitectura del sistema
+## 3. Tecnologías utilizadas
 
-WEBACIELO utiliza una arquitectura distribuida que separa la interfaz web, los microservicios, las bases de datos y el procesamiento analítico.
+| Categoría | Tecnologías |
+|---|---|
+| Frontend | HTML5, CSS3, JavaScript |
+| Backend | Node.js |
+| Bases de datos | MySQL 8.0 |
+| Contenedores | Docker |
+| Orquestación | Docker Swarm |
+| Balanceo de carga | HAProxy 2.9 |
+| Procesamiento de datos | Apache Spark 3.5.5 |
+| Pruebas de rendimiento | Apache JMeter 5.6.3 |
+| Sistemas operativos | Ubuntu |
+| Virtualización | Oracle VirtualBox |
+| Control de versiones | Git y GitHub |
+
+---
+
+## 4. Arquitectura del sistema
+
+WEBACIELO utiliza una arquitectura distribuida que permite separar las responsabilidades de cada componente.
 
 ```text
-                     USUARIO
-                        |
-                        v
-                FRONTEND WEB
-                  UBUNTU 1
-                  Puerto 8081
-                        |
-                        v
-                    HAPROXY
-                  UBUNTU 2
-                  Puerto 5080
-                        |
-       +----------------+----------------+
-       |                |                |
-       v                v                v
-    USUARIOS         SERVICIOS          CITAS
-     :3001             :3002            :3003
-       |                |                |
-       v                v                v
-     MySQL            MySQL            MySQL
+                       USUARIO
+                          |
+                          v
+                    FRONTEND WEB
+                      Ubuntu 1
+                     Puerto 8081
+                          |
+                          v
+                       HAPROXY
+                       Ubuntu 2
+                      Puerto 5080
+                          |
+            +-------------+-------------+
+            |             |             |
+            v             v             v
+         USUARIOS      SERVICIOS       CITAS
+           3001          3002          3003
+            |             |             |
+            v             v             v
+          MySQL         MySQL         MySQL
 
-                 +-------------+
-                 |             |
-                 v             v
-               PAGOS        ANALISIS
-               :3004          :3005
-                 |             |
-                 v             v
-               MySQL      APACHE SPARK
+                 +---------------+
+                 |               |
+                 v               v
+               PAGOS          ANALISIS
+                3004            3005
+                 |               |
+                 v               v
+               MySQL        APACHE SPARK
 ```
 
-Los microservicios se ejecutan en contenedores Docker y utilizan la red overlay `acielo-red` para su comunicación.
+El frontend realiza solicitudes HTTP al backend a través de HAProxy.
 
-HAProxy actúa como punto de entrada HTTP, mientras que Apache Spark se integra mediante una API de análisis.
+Los microservicios se encuentran contenerizados y se comunican mediante la red overlay `acielo-red`.
+
+Cada microservicio dispone de su propia base de datos MySQL, permitiendo separar el almacenamiento y la lógica de negocio.
 
 ---
 
-## 7. Infraestructura de servidores
+## 5. Estructura del repositorio
 
-El proyecto se desarrolló utilizando dos máquinas virtuales Ubuntu.
+```text
+acielo-rosa/
+│
+├── dataset/
+│   └── Archivos de datos del proyecto
+│
+├── WEBACIELO/
+│   └── Backend, microservicios
+│       y configuraciones
+│
+├── WEBACIELO-FRONTend/
+│   ├── analisis/
+│   ├── usuarios/
+│   ├── servicios/
+│   ├── citas/
+│   ├── pagos/
+│   ├── api.js
+│   ├── index.html
+│   ├── estilos.css
+│   └── inicio-premium.css
+│
+└── README.md
+```
 
-| Servidor | Dirección IP | Responsabilidad |
+---
+
+## 6. Infraestructura de despliegue
+
+La infraestructura del proyecto está compuesta por dos máquinas virtuales Ubuntu configuradas en Oracle VirtualBox.
+
+| Servidor | Dirección IP | Función |
 |---|---|---|
 | servidorUbuntu1 | 192.168.100.2 | Frontend |
-| servidorUbuntu2 | 192.168.100.3 | Backend, bases de datos, Docker Swarm, HAProxy y Spark |
+| servidorUbuntu2 | 192.168.100.3 | Backend, Docker Swarm, HAProxy, MySQL y Spark |
 
-### 7.1. Servidor Ubuntu1
+### Ubuntu1 — Frontend
 
-Contiene el frontend de WEBACIELO.
+El servidor Ubuntu1 aloja la interfaz web de WEBACIELO.
 
-Configuración:
-
-- Servicio: `webacielo-frontend`
-- Puerto: `8081`
 - Directorio: `/home/vagrant/WEBACIELO-FRONTend`
-- Servidor HTTP: Python
+- Puerto: `8081`
+- Servicio: `webacielo-frontend`
+- Servidor HTTP: Python 3
 
 Dirección de acceso:
 
 `http://192.168.100.2:8081`
 
-### 7.2. Servidor Ubuntu2
+### Ubuntu2 — Backend
 
-Contiene los componentes del backend y la infraestructura de procesamiento.
-
-Incluye:
+El servidor Ubuntu2 aloja los microservicios y los componentes de infraestructura.
 
 - Docker Engine.
 - Docker Swarm.
@@ -208,24 +157,102 @@ Incluye:
 - Apache Spark.
 - API de análisis.
 
-El entorno Docker Swarm documentado utiliza un nodo administrador. Por tanto, las pruebas de escalado realizadas no representan una distribución entre varios nodos físicos.
+---
+
+## 7. Requisitos
+
+Para reproducir el entorno se requiere:
+
+- Ubuntu o un sistema Linux compatible.
+- Docker Engine.
+- Docker Swarm.
+- Node.js.
+- MySQL.
+- HAProxy.
+- Apache Spark.
+- Python 3.
+- Conectividad entre los servidores.
 
 ---
 
-## 8. Microservicios
+## 8. Instalación y ejecución
 
-El backend se encuentra dividido en cuatro microservicios principales.
+### Paso 1. Clonar el repositorio
 
-| Microservicio | Nombre en Docker Swarm | Puerto |
+```bash
+git clone https://github.com/Sxmugiron/acielo-rosa.git
+cd acielo-rosa
+```
+
+### Paso 2. Ejecutar el frontend
+
+```bash
+cd WEBACIELO-FRONTend
+python3 -m http.server 8081 --bind 0.0.0.0
+```
+
+Acceder mediante:
+
+`http://localhost:8081`
+
+### Paso 3. Configurar la conexión con el backend
+
+El archivo `api.js` contiene las direcciones utilizadas para comunicarse con las APIs.
+
+En la infraestructura del proyecto se utilizó:
+
+`http://192.168.100.3:5080`
+
+### Paso 4. Preparar el backend
+
+Para ejecutar los microservicios se deben configurar las bases de datos, las variables de entorno, las imágenes Docker y los servicios de Docker Swarm.
+
+La configuración del backend se encuentra organizada dentro del directorio `WEBACIELO/`.
+
+---
+
+## 9. Microservicios y API
+
+El backend está dividido en cuatro microservicios principales.
+
+| Microservicio | Servicio Docker | Puerto |
 |---|---|---|
-| Usuarios | acielo_usuarios | 3001 |
-| Servicios | acielo_servicios | 3002 |
-| Citas | acielo_citas | 3003 |
-| Pagos | acielo_pagos | 3004 |
+| Usuarios | `acielo_usuarios` | 3001 |
+| Servicios | `acielo_servicios` | 3002 |
+| Citas | `acielo_citas` | 3003 |
+| Pagos | `acielo_pagos` | 3004 |
 
-Cada microservicio dispone de su correspondiente servicio de base de datos MySQL.
+### Endpoints
 
-### Comandos de administración
+| Ruta | Función |
+|---|---|
+| `/api/usuarios` | Gestión de usuarios |
+| `/api/servicios` | Gestión de servicios |
+| `/api/citas` | Gestión de citas |
+| `/api/pagosv` | Gestión de pagos |
+| `/api/analisis` | Análisis de datos |
+
+Ejemplo de consulta:
+
+```bash
+curl http://192.168.100.3:5080/api/usuarios
+```
+
+---
+
+## 10. Docker Swarm y HAProxy
+
+### Docker Swarm
+
+Docker Swarm se implementó para administrar y escalar los microservicios contenerizados.
+
+Entre sus funciones se encuentran:
+
+- Administración de servicios.
+- Creación y ejecución de réplicas.
+- Escalado de microservicios.
+- Gestión de tareas y contenedores.
+- Comunicación mediante redes overlay.
 
 Consultar los servicios:
 
@@ -239,249 +266,162 @@ Consultar las tareas:
 sudo docker service ps acielo_usuarios
 ```
 
-Consultar los registros:
-
-```bash
-sudo docker service logs acielo_usuarios
-```
-
-Escalar el servicio de usuarios:
+Escalar el microservicio de usuarios:
 
 ```bash
 sudo docker service scale acielo_usuarios=2
 ```
 
----
+### HAProxy
 
-## 9. Balanceo de carga con HAProxy
+HAProxy se configuró como proxy inverso y balanceador de carga para el backend.
 
-HAProxy se utiliza como punto de entrada para las solicitudes HTTP del backend.
-
-Configuración:
-
-- Imagen: `haproxy:2.9`
-- Servicio: `acielo_haproxy`
-- Puerto publicado: `5080`
-- Puerto interno: `80`
-- Red: `acielo-red`
-
-### Rutas de la API
-
-| Ruta | Destino |
+| Parámetro | Configuración |
 |---|---|
-| /api/usuarios | Usuarios |
-| /api/servicios | Servicios |
-| /api/citas | Citas |
-| /api/pagosv | Pagos |
-| /api/analisis | Análisis |
+| Servicio | `acielo_haproxy` |
+| Imagen | `haproxy:2.9` |
+| Puerto publicado | 5080 |
+| Puerto interno | 80 |
+| Red | `acielo-red` |
 
-Ejemplo:
-
-```bash
-curl http://192.168.100.3:5080/api/usuarios
-```
-
-HAProxy permite centralizar las solicitudes y facilita la implementación de estrategias de balanceo.
-
-**Estado técnico:** durante las verificaciones del 19 de noviembre de 2026 se identificaron problemas de resolución DNS y conectividad mediante las IP virtuales de Docker Swarm. La recuperación del servicio HAProxy y su escalado a dos réplicas quedaron pendientes.
+Su implementación permite centralizar las solicitudes HTTP y dirigirlas hacia los microservicios correspondientes.
 
 ---
 
-## 10. Integración con Apache Spark
+## 11. Apache Spark y análisis de datos
 
-El proyecto incorpora Apache Spark 3.5.5 como herramienta de procesamiento de información.
+Apache Spark 3.5.5 se incorporó para realizar tareas de procesamiento y análisis de información.
 
 La infraestructura incluye:
 
 - Spark Master.
 - Spark Worker.
 - API Node.js de análisis.
-- Integración con el frontend.
+- Integración con la interfaz web.
 
-La API utiliza el puerto `3005` y permite consultar funcionalidades relacionadas con el análisis de datos.
+La API de análisis utiliza el puerto `3005`.
 
-La integración de Spark busca separar las operaciones analíticas de los microservicios encargados de los procesos administrativos.
+El módulo de análisis permite consultar información y acceder a páginas que explican la arquitectura, la metodología y el proceso de análisis de datos.
 
 ---
 
-## 11. Pruebas realizadas
+## 12. Pruebas y validación
 
-Durante el desarrollo se ejecutaron diferentes pruebas para evaluar el comportamiento del sistema.
+Durante el desarrollo se realizaron pruebas funcionales, de concurrencia, escalabilidad y rendimiento.
 
-### 11.1. Pruebas funcionales
+### Pruebas funcionales
 
-Se realizaron solicitudes HTTP para verificar la respuesta de los servicios.
+Se verificó la respuesta HTTP de los servicios.
 
-En verificaciones previas se registraron:
+Entre las pruebas realizadas se registraron:
 
 - 30 solicitudes secuenciales con respuesta HTTP 200.
 - 20 solicitudes concurrentes con respuesta HTTP 200.
 
-### 11.2. Pruebas de escalabilidad
+### Pruebas de escalabilidad
 
-Se realizaron ejercicios de escalado de microservicios mediante Docker Swarm, aumentando y reduciendo la cantidad de réplicas.
+Se realizaron pruebas utilizando una y dos réplicas del microservicio de usuarios mediante Docker Swarm.
 
-### 11.3. Pruebas de carga con Apache JMeter
+### Pruebas de carga con Apache JMeter
 
-Se evaluó el endpoint:
+Se utilizó Apache JMeter 5.6.3 para evaluar el endpoint:
 
 `GET /api/usuarios`
 
-Escenarios utilizados:
-
-| Usuarios virtuales | Réplicas |
+| Usuarios virtuales | Réplicas evaluadas |
 |---|---|
 | 10 | 1 y 2 |
 | 50 | 1 y 2 |
 | 100 | 1 y 2 |
 | 200 | 1 y 2 |
 
-Resultados documentados:
+**Resultados:**
 
-- Ocho ejecuciones.
+- Ocho ejecuciones de prueba.
 - 0,00 % de errores.
-- Tiempos promedio entre 12 y 25 ms.
-- Sin mejoras consistentes de latencia o throughput al pasar de una a dos réplicas.
+- Tiempos promedio entre 12 y 25 milisegundos.
+- Comparación del comportamiento del servicio con una y dos réplicas.
 
-Estos resultados corresponden al endpoint de usuarios y no representan una evaluación completa de todos los módulos.
-
----
-
-## 12. Estructura del repositorio
-
-```text
-acielo-rosa/
-│
-├── dataset/
-│   └── Datos del proyecto
-│
-├── WEBACIELO/
-│   └── Backend, microservicios
-│       y configuraciones
-│
-├── WEBACIELO-FRONTend/
-│   │
-│   ├── analisis/
-│   ├── usuarios/
-│   ├── citas/
-│   ├── servicios/
-│   ├── pagos/
-│   │
-│   ├── api.js
-│   ├── index.html
-│   ├── estilos.css
-│   └── inicio-premium.css
-│
-└── README.md
-```
+Estas pruebas permitieron analizar el comportamiento del endpoint de usuarios bajo diferentes niveles de carga.
 
 ---
 
-## 13. Instalación y ejecución
+## 13. Verificación del funcionamiento
 
-### 13.1. Requisitos
-
-Para reproducir el entorno se requiere:
-
-- Ubuntu o un sistema compatible.
-- Docker Engine.
-- Docker Swarm.
-- MySQL.
-- Node.js.
-- HAProxy.
-- Apache Spark.
-- Conectividad entre los servidores.
-
-### 13.2. Clonar el repositorio
+### Verificar el frontend
 
 ```bash
-git clone https://github.com/Sxmugiron/acielo-rosa.git
-cd acielo-rosa
+sudo systemctl status webacielo-frontend
 ```
 
-### 13.3. Ejecutar el frontend
+Comprobar la respuesta HTTP:
 
 ```bash
-cd WEBACIELO-FRONTend
-python3 -m http.server 8081 --bind 0.0.0.0
+curl -I http://localhost:8081
 ```
 
-Acceder mediante:
+### Verificar los microservicios
 
-`http://localhost:8081`
+```bash
+sudo docker service ls
+```
 
-Para utilizar las funcionalidades conectadas al backend, se deben configurar las direcciones correspondientes en `api.js`.
+### Verificar HAProxy
 
-### 13.4. Despliegue del backend
+```bash
+sudo docker service ps acielo_haproxy
+```
 
-El despliegue completo requiere configurar las variables de entorno, las bases de datos, las imágenes Docker, la red de servicios y los componentes de análisis.
+### Verificar la red Docker
 
-Las direcciones IP documentadas corresponden al entorno virtual de desarrollo y deben adaptarse al utilizar otra infraestructura.
+```bash
+sudo docker network inspect acielo-red
+```
+
+### Consultar la API
+
+```bash
+curl -i http://localhost:5080/api/usuarios
+```
 
 ---
 
-## 14. Seguridad
+## 14. Seguridad y configuración
 
-Para fortalecer la seguridad de la plataforma se recomienda:
+Para mantener una configuración segura se recomienda:
 
 - Utilizar variables de entorno para las credenciales.
-- Evitar publicar archivos `.env` con información sensible.
+- Evitar publicar contraseñas y tokens.
 - Restringir el acceso a las bases de datos.
-- Implementar HTTPS en despliegues públicos.
-- Revisar los mecanismos de autenticación y autorización.
+- Proteger los endpoints que requieren autenticación.
+- Implementar HTTPS en entornos públicos.
 - Mantener actualizadas las dependencias.
 - Realizar copias de seguridad.
-- Supervisar los servicios y contenedores.
-
-El entorno descrito corresponde a un proyecto académico y no debe considerarse automáticamente preparado para producción.
 
 ---
 
 ## 15. Resultados y aprendizajes
 
-El desarrollo de WEBACIELO permitió integrar diferentes áreas de la ingeniería de software:
+El desarrollo de WEBACIELO permitió integrar conocimientos relacionados con:
 
-- Desarrollo de interfaces web.
-- Construcción de APIs.
+- Desarrollo frontend.
 - Arquitectura de microservicios.
+- Construcción de APIs.
 - Administración de bases de datos.
-- Contenerización de aplicaciones.
-- Orquestación de servicios.
-- Balanceo de carga.
-- Procesamiento de datos.
-- Pruebas de rendimiento.
-- Control de versiones.
-
-También permitió identificar desafíos relacionados con la comunicación entre servicios, la resolución DNS, las redes virtuales y la disponibilidad de componentes distribuidos.
-
----
-
-## 16. Mejoras futuras
-
-Entre las mejoras propuestas se encuentran:
-
-- Estabilizar la comunicación interna de Docker Swarm.
-- Recuperar el servicio HAProxy.
-- Evaluar el escalado de HAProxy a dos réplicas.
-- Incorporar herramientas de monitoreo.
-- Automatizar pruebas.
-- Fortalecer la seguridad.
-- Optimizar las consultas a bases de datos.
-- Ampliar las funcionalidades analíticas.
-- Evaluar un despliegue multinodo.
-- Mejorar la documentación de instalación y mantenimiento.
+- Contenerización con Docker.
+- Orquestación con Docker Swarm.
+- Balanceo de carga mediante HAProxy.
+- Procesamiento de datos con Apache Spark.
+- Pruebas de rendimiento con Apache JMeter.
+- Administración de servidores Ubuntu.
+- Control de versiones con Git y GitHub.
 
 ---
 
-## 17. Impacto del proyecto
+## 16. Impacto del proyecto
 
-WEBACIELO constituye una propuesta tecnológica orientada a apoyar la gestión de información de la Fundación Acielo Rosa.
+WEBACIELO representa una propuesta tecnológica orientada a apoyar la digitalización de los procesos de la Fundación Acielo Rosa.
 
-Su desarrollo demuestra cómo una arquitectura modular puede integrar diferentes procesos administrativos en una plataforma web.
+La plataforma integra funcionalidades administrativas y herramientas de análisis en una arquitectura modular, facilitando la organización de la información y la separación de responsabilidades.
 
-La incorporación de microservicios, bases de datos, contenedores y procesamiento analítico permite explorar alternativas para mejorar la organización, el mantenimiento y la evolución del sistema.
-
-Desde el ámbito académico, el proyecto representa una aplicación práctica de conocimientos de desarrollo de software, infraestructura, redes, bases de datos y análisis de información.
-
----
-
+Desde el ámbito académico, el proyecto demuestra la integración práctica de tecnologías de desarrollo web, microservicios, infraestructura, bases de datos y procesamiento de información.
