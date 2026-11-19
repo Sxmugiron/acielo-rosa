@@ -1,0 +1,11 @@
+{
+    "total_citas": 110527,
+    "asistieron": 88208,
+    "no_asistieron": 22319,
+    "porcentaje_asistencia": 79.81,
+    "porcentaje_inasistencia": 20.19,
+    "generos": {
+        "F": 71840,
+        "M": 38687
+    }
+}

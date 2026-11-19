@@ -1,0 +1,171 @@
+services:
+
+  usuarios-db:
+    image: mysql:8.0
+    container_name: acielo-usuarios-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${USUARIOS_DB_ROOT}
+      MYSQL_DATABASE: usuariosa
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${USUARIOS_DB_PASSWORD}
+    volumes:
+      - usuarios_data:/var/lib/mysql
+      - ./database/usuarios/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    networks:
+      - acielo-red
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  servicios-db:
+    image: mysql:8.0
+    container_name: acielo-servicios-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SERVICIOS_DB_ROOT}
+      MYSQL_DATABASE: serviciosacielo
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${SERVICIOS_DB_PASSWORD}
+    volumes:
+      - servicios_data:/var/lib/mysql
+      - ./database/servicios/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    networks:
+      - acielo-red
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  citas-db:
+    image: mysql:8.0
+    container_name: acielo-citas-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${CITAS_DB_ROOT}
+      MYSQL_DATABASE: capascitas
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${CITAS_DB_PASSWORD}
+    volumes:
+      - citas_data:/var/lib/mysql
+      - ./database/citas/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    networks:
+      - acielo-red
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  pagos-db:
+    image: mysql:8.0
+    container_name: acielo-pagos-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PAGOS_DB_ROOT}
+      MYSQL_DATABASE: pagosv
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${PAGOS_DB_PASSWORD}
+    volumes:
+      - pagos_data:/var/lib/mysql
+      - ./database/pagos/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    networks:
+      - acielo-red
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  usuarios:
+    build: ./Usuariosa
+    container_name: acielo-usuarios
+    restart: unless-stopped
+    environment:
+      PORT: 3001
+      DB_HOST: usuarios-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${USUARIOS_DB_PASSWORD}
+      DB_NAME: usuariosa
+    ports:
+      - "3001:3001"
+    depends_on:
+      usuarios-db:
+        condition: service_healthy
+    networks:
+      - acielo-red
+
+  servicios:
+    build: ./Serviciosa
+    container_name: acielo-servicios
+    restart: unless-stopped
+    environment:
+      PORT: 3002
+      DB_HOST: servicios-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${SERVICIOS_DB_PASSWORD}
+      DB_NAME: serviciosacielo
+    ports:
+      - "3002:3002"
+    depends_on:
+      servicios-db:
+        condition: service_healthy
+    networks:
+      - acielo-red
+
+  citas:
+    build: ./Citasa
+    container_name: acielo-citas
+    restart: unless-stopped
+    environment:
+      PORT: 3003
+      DB_HOST: citas-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${CITAS_DB_PASSWORD}
+      DB_NAME: capascitas
+      USUARIOS_URL: http://usuarios:3001
+      SERVICIOS_URL: http://servicios:3002
+      PAGOS_URL: http://pagos:3004
+    ports:
+      - "3003:3003"
+    depends_on:
+      citas-db:
+        condition: service_healthy
+      usuarios:
+        condition: service_started
+      servicios:
+        condition: service_started
+    networks:
+      - acielo-red
+
+  pagos:
+    build: ./pagosv
+    container_name: acielo-pagos
+    restart: unless-stopped
+    environment:
+      PORT: 3004
+      DB_HOST: pagos-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${PAGOS_DB_PASSWORD}
+      DB_NAME: pagosv
+      CITAS_URL: http://citas:3003
+    ports:
+      - "3004:3004"
+    depends_on:
+      pagos-db:
+        condition: service_healthy
+    networks:
+      - acielo-red
+
+volumes:
+  usuarios_data:
+  servicios_data:
+  citas_data:
+  pagos_data:
+
+networks:
+  acielo-red:
+    driver: bridge

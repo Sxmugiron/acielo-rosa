@@ -1,0 +1,80 @@
+{
+    "por_edad": [
+        {
+            "categoria": "0-17",
+            "total": 27379,
+            "faltaron": 5997,
+            "porcentaje_inasistencia": 21.9
+        },
+        {
+            "categoria": "60+",
+            "total": 21173,
+            "faltaron": 3242,
+            "porcentaje_inasistencia": 15.31
+        },
+        {
+            "categoria": "18-35",
+            "total": 25624,
+            "faltaron": 6103,
+            "porcentaje_inasistencia": 23.82
+        },
+        {
+            "categoria": "36-59",
+            "total": 36350,
+            "faltaron": 6977,
+            "porcentaje_inasistencia": 19.19
+        }
+    ],
+    "por_sms": [
+        {
+            "categoria": "1",
+            "total": 35482,
+            "faltaron": 9784,
+            "porcentaje_inasistencia": 27.57
+        },
+        {
+            "categoria": "0",
+            "total": 75044,
+            "faltaron": 12535,
+            "porcentaje_inasistencia": 16.7
+        }
+    ],
+    "por_dia_semana": [
+        {
+            "categoria": "Wednesday",
+            "total": 25867,
+            "faltaron": 5093,
+            "porcentaje_inasistencia": 19.69
+        },
+        {
+            "categoria": "Tuesday",
+            "total": 25640,
+            "faltaron": 5152,
+            "porcentaje_inasistencia": 20.09
+        },
+        {
+            "categoria": "Friday",
+            "total": 19019,
+            "faltaron": 4037,
+            "porcentaje_inasistencia": 21.23
+        },
+        {
+            "categoria": "Thursday",
+            "total": 17247,
+            "faltaron": 3338,
+            "porcentaje_inasistencia": 19.35
+        },
+        {
+            "categoria": "Saturday",
+            "total": 39,
+            "faltaron": 9,
+            "porcentaje_inasistencia": 23.08
+        },
+        {
+            "categoria": "Monday",
+            "total": 22714,
+            "faltaron": 4690,
+            "porcentaje_inasistencia": 20.65
+        }
+    ]
+}

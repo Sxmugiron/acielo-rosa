@@ -1,0 +1,27 @@
+# WEBACIELO - Archivos excluidos de Git
+
+# Credenciales privadas
+.env
+.env.*
+!.env.example
+
+# Dependencias de Node.js
+node_modules/
+
+# Instalacion y paquetes de Apache Spark
+spark/spark-3.5.5-bin-hadoop3/
+spark/spark-3.5.5-bin-hadoop3.tgz
+
+# Respaldos privados
+respaldo-swarm/
+spark/respaldo_resultados_*/
+*.bak
+*.bak.*
+*.dump
+
+# Archivos temporales
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+spark/dataset/

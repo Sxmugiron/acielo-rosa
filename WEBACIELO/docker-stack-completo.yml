@@ -1,0 +1,174 @@
+version: "3.8"
+
+services:
+  usuarios-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${USUARIOS_DB_ROOT}
+      MYSQL_DATABASE: usuariosa
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${USUARIOS_DB_PASSWORD}
+    volumes:
+      - usuarios_data:/var/lib/mysql
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  servicios-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SERVICIOS_DB_ROOT}
+      MYSQL_DATABASE: serviciosacielo
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${SERVICIOS_DB_PASSWORD}
+    volumes:
+      - servicios_data:/var/lib/mysql
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  citas-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${CITAS_DB_ROOT}
+      MYSQL_DATABASE: capascitas
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${CITAS_DB_PASSWORD}
+    volumes:
+      - citas_data:/var/lib/mysql
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  pagos-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PAGOS_DB_ROOT}
+      MYSQL_DATABASE: pagosv
+      MYSQL_USER: acielo_app
+      MYSQL_PASSWORD: ${PAGOS_DB_PASSWORD}
+    volumes:
+      - pagos_data:/var/lib/mysql
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  usuarios:
+    image: sxmu08/webacielo-usuarios:latest
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: acielo_usuarios-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${USUARIOS_DB_PASSWORD}
+      DB_NAME: usuariosa
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  servicios:
+    image: sxmu08/webacielo-servicios:latest
+    ports:
+      - "3002:3002"
+    environment:
+      DB_HOST: acielo_servicios-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${SERVICIOS_DB_PASSWORD}
+      DB_NAME: serviciosacielo
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  citas:
+    image: sxmu08/webacielo-citas:latest
+    ports:
+      - "3003:3003"
+    environment:
+      DB_HOST: acielo_citas-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${CITAS_DB_PASSWORD}
+      DB_NAME: capascitas
+      USUARIOS_URL: http://acielo_usuarios:3001
+      SERVICIOS_URL: http://acielo_servicios:3002
+      PAGOS_URL: http://acielo_pagos:3004
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  pagos:
+    image: sxmu08/webacielo-pagos:latest
+    ports:
+      - "3004:3004"
+    environment:
+      DB_HOST: acielo_pagos-db
+      DB_USER: acielo_app
+      DB_PASSWORD: ${PAGOS_DB_PASSWORD}
+      DB_NAME: pagosv
+      CITAS_URL: http://acielo_citas:3003
+    networks:
+      - acielo-red
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+
+  haproxy:
+    image: haproxy:2.9
+    ports:
+      - "5080:80"
+    networks:
+      - acielo-red
+    configs:
+      - source: haproxy_spark
+        target: /usr/local/etc/haproxy/haproxy.cfg
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  usuarios_data:
+    external: true
+    name: webacielo_usuarios_data
+  servicios_data:
+    external: true
+    name: webacielo_servicios_data
+  citas_data:
+    external: true
+    name: webacielo_citas_data
+  pagos_data:
+    external: true
+    name: webacielo_pagos_data
+
+networks:
+  acielo-red:
+    external: true
+    name: acielo-red
+  
+
+configs:
+  haproxy_spark:
+    external: true
+    name: acielo_haproxy_spark_v2

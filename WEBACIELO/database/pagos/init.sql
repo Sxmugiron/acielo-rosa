@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS pagosv (
+    idpago INT AUTO_INCREMENT PRIMARY KEY,
+    idcita INT NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    estado VARCHAR(30) NOT NULL,
+    fecha_hora DATETIME NOT NULL,
+    comprobante TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
