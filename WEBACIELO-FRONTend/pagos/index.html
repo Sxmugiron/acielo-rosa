@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pagos | Acielo Rosa</title>
+
+    <link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="pagos-premium.css">
+</head>
+
+<body class="pagos-premium">
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="index.html" class="activo">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+
+<main>
+
+    <div class="page-head">
+
+        <h2>
+            Pagos
+        </h2>
+
+        <p class="subtitulo">
+            Consulta y administra los pagos registrados.
+        </p>
+
+        <div class="form-buttons">
+
+            <a
+                href="insertar_pago.html"
+                class="btn btn-rosa">
+                + Nuevo pago
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="card table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Cita</th>
+                    <th>Valor</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Comprobante</th>
+                    <th>Acciones</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody id="tablaPagos">
+
+                <tr>
+
+                    <td colspan="7">
+                        Cargando pagos...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+
+<script src="../api.js"></script>
+
+
+<script>
+
+async function cargarPagos() {
+
+    const tabla =
+        document.getElementById("tablaPagos");
+
+
+    try {
+
+        const pagos =
+            await obtenerDatos(API.pagos);
+
+
+        tabla.innerHTML = "";
+
+
+        if (!pagos || pagos.length === 0) {
+
+            tabla.innerHTML = `
+                <tr>
+                    <td colspan="7">
+                        No hay pagos registrados.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        pagos.forEach(pago => {
+
+            const estado =
+                pago.estado || "pendiente";
+
+
+            tabla.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${pago.idpago}
+                    </td>
+
+                    <td>
+                        ${pago.idcita}
+                    </td>
+
+                    <td>
+                        $${Number(
+                            pago.valor
+                        ).toLocaleString("es-CO")}
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="estado ${estado}">
+                            ${estado}
+                        </span>
+
+                    </td>
+
+                    <td>
+                        ${pago.fecha_hora || ""}
+                    </td>
+
+                    <td>
+                        ${pago.comprobante || "Sin comprobante"}
+                    </td>
+
+                    <td>
+
+                        <div class="acciones">
+
+                            <a
+                                class="accion editar"
+                                href="editar_pago.html?id=${pago.idpago}">
+                                Editar
+                            </a>
+
+                            <button
+                                class="accion eliminar"
+                                onclick="eliminarPago(${pago.idpago})">
+                                Eliminar
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        tabla.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+                    No fue posible cargar los pagos.
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+async function eliminarPago(id) {
+
+    const confirmar =
+        confirm(
+            "¿Seguro que deseas eliminar este pago?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    try {
+
+        await enviarDatos(
+            `${API.pagos}/${id}`,
+            "DELETE",
+            {}
+        );
+
+
+        alert(
+            "Pago eliminado correctamente."
+        );
+
+
+        cargarPagos();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "No se pudo eliminar el pago: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+cargarPagos();
+
+</script>
+
+</body>
+</html>

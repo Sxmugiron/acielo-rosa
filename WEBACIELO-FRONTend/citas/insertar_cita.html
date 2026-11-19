@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Agendar cita | Acielo Rosa</title>
+
+    <link
+        rel="stylesheet"
+        href="../estilos.css">
+    <link rel="stylesheet" href="citas-premium.css">
+
+</head>
+
+
+<body class="citas-premium">
+
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="index.html" class="activo">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+
+<main>
+
+
+    <div class="page-head">
+
+        <h2>
+            Agendar cita
+        </h2>
+
+        <p class="subtitulo">
+            Selecciona el usuario, servicio, fecha y hora.
+        </p>
+
+    </div>
+
+
+    <div class="card form-card">
+
+
+        <form id="formCita">
+
+
+            <div class="campo">
+
+                <label for="usuario_id">
+                    Usuario
+                </label>
+
+                <select
+                    id="usuario_id"
+                    required>
+
+                    <option value="">
+                        Cargando usuarios...
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="servicio_id">
+                    Servicio
+                </label>
+
+                <select
+                    id="servicio_id"
+                    required>
+
+                    <option value="">
+                        Cargando servicios...
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="fecha">
+                    Fecha
+                </label>
+
+                <input
+                    type="date"
+                    id="fecha"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="hora">
+                    Hora
+                </label>
+
+                <input
+                    type="time"
+                    id="hora"
+                    required>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="submit"
+                    class="btn btn-rosa">
+                    Agendar cita
+                </button>
+
+
+                <a
+                    href="index.html"
+                    class="btn btn-gris">
+                    Cancelar
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+        <div
+            id="mensaje"
+            class="msg">
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<script src="../api.js"></script>
+
+
+<script>
+
+
+const usuarioSelect =
+    document.getElementById(
+        "usuario_id"
+    );
+
+
+const servicioSelect =
+    document.getElementById(
+        "servicio_id"
+    );
+
+
+const formulario =
+    document.getElementById(
+        "formCita"
+    );
+
+
+const mensaje =
+    document.getElementById(
+        "mensaje"
+    );
+
+
+async function cargarUsuarios() {
+
+    try {
+
+        const usuarios =
+            await obtenerDatos(
+                API.usuarios
+            );
+
+
+        usuarioSelect.innerHTML =
+            `<option value="">
+                Selecciona un usuario
+            </option>`;
+
+
+        usuarios.forEach(usuario => {
+
+            usuarioSelect.innerHTML += `
+                <option value="${usuario.id}">
+                    ${usuario.nombre} - ${usuario.email}
+                </option>
+            `;
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        usuarioSelect.innerHTML =
+            `<option value="">
+                No se pudieron cargar los usuarios
+            </option>`;
+
+    }
+
+}
+
+
+async function cargarServicios() {
+
+    try {
+
+        const servicios =
+            await obtenerDatos(
+                API.servicios
+            );
+
+
+        servicioSelect.innerHTML =
+            `<option value="">
+                Selecciona un servicio
+            </option>`;
+
+
+        servicios.forEach(servicio => {
+
+            servicioSelect.innerHTML += `
+                <option value="${servicio.id}">
+                    ${servicio.nombre} -
+                    $${Number(servicio.precio).toLocaleString("es-CO")}
+                </option>
+            `;
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        servicioSelect.innerHTML =
+            `<option value="">
+                No se pudieron cargar los servicios
+            </option>`;
+
+    }
+
+}
+
+
+formulario.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const datos = {
+
+            usuario_id:
+                Number(
+                    usuarioSelect.value
+                ),
+
+            servicio_id:
+                Number(
+                    servicioSelect.value
+                ),
+
+            fecha:
+                document.getElementById(
+                    "fecha"
+                ).value,
+
+            hora:
+                document.getElementById(
+                    "hora"
+                ).value
+
+        };
+
+
+        if (
+            !datos.usuario_id ||
+            !datos.servicio_id ||
+            !datos.fecha ||
+            !datos.hora
+        ) {
+
+            mensaje.className =
+                "msg error";
+
+            mensaje.textContent =
+                "Completa todos los campos.";
+
+            return;
+
+        }
+
+
+        try {
+
+            await enviarDatos(
+                API.citas,
+                "POST",
+                datos
+            );
+
+
+            mensaje.className =
+                "msg ok";
+
+            mensaje.textContent =
+                "Cita creada correctamente.";
+
+
+            formulario.reset();
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "index.html";
+
+            }, 1500);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            mensaje.className =
+                "msg error";
+
+            mensaje.textContent =
+                "No se pudo crear la cita: " +
+                error.message;
+
+        }
+
+    }
+);
+
+
+cargarUsuarios();
+
+cargarServicios();
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagos registrados | Acielo Rosa</title>
+<link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="pagos-premium.css">
+
+<style>
+
+.tabla{
+margin-top:35px;
+background:white;
+border-radius:24px;
+padding:25px;
+overflow-x:auto;
+box-shadow:0 10px 30px rgba(70,40,60,.06);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:950px;
+}
+
+th{
+padding:15px;
+text-align:left;
+background:#f8e4ed;
+color:#8f4164;
+}
+
+td{
+padding:15px;
+border-bottom:1px solid #f0e7eb;
+}
+
+.btn{
+border:0;
+padding:8px 13px;
+border-radius:20px;
+font-weight:bold;
+cursor:pointer;
+text-decoration:none;
+font-size:12px;
+}
+
+.editar{
+background:#e8edf8;
+color:#53688f;
+}
+
+.eliminar{
+background:#fde5e5;
+color:#a33b3b;
+}
+
+.estado-pendiente{
+color:#b07816;
+font-weight:bold;
+}
+
+.estado-pagado{
+color:#28764e;
+font-weight:bold;
+}
+
+.estado-rechazado{
+color:#a33b3b;
+font-weight:bold;
+}
+
+.mensaje{
+text-align:center;
+padding:25px;
+color:#777;
+}
+
+.volver{
+display:inline-block;
+margin-top:25px;
+color:#c24b7c;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body class="pagos-premium">
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="index.html" class="activo">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+<main>
+
+<div class="page-head">
+
+<span>PAGOS</span>
+
+<h1>Pagos registrados</h1>
+
+<p>Consulta y administra los pagos del sistema.</p>
+
+</div>
+
+<div class="tabla">
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID Pago</th>
+<th>ID Cita</th>
+<th>Valor</th>
+<th>Estado</th>
+<th>Fecha y hora</th>
+<th>Comprobante</th>
+<th>Acciones</th>
+</tr>
+
+</thead>
+
+<tbody id="tabla">
+
+<tr>
+<td colspan="7" class="mensaje">
+Cargando pagos...
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<a href="index.html" class="volver">
+← Volver a Pagos
+</a>
+
+</main>
+
+<footer>
+<p>Acielo Rosa · Sistema de gestión</p>
+</footer>
+
+<script>
+
+const API='http://192.168.100.3:3004/api/pagosv';
+
+async function cargar(){
+
+const tabla=document.getElementById('tabla');
+
+try{
+
+const respuesta=await fetch(API);
+
+if(!respuesta.ok) throw new Error();
+
+const pagos=await respuesta.json();
+
+tabla.innerHTML='';
+
+if(pagos.length===0){
+
+tabla.innerHTML=`
+<tr>
+<td colspan="7" class="mensaje">
+No hay pagos registrados.
+</td>
+</tr>`;
+
+return;
+
+}
+
+pagos.forEach(pago=>{
+
+let clase='';
+
+if(pago.estado==='pendiente')
+clase='estado-pendiente';
+
+if(pago.estado==='pagado')
+clase='estado-pagado';
+
+if(pago.estado==='rechazado')
+clase='estado-rechazado';
+
+tabla.innerHTML+=`
+
+<tr>
+
+<td>${pago.idpago}</td>
+
+<td>${pago.idcita}</td>
+
+<td>$${Number(pago.valor).toLocaleString('es-CO')}</td>
+
+<td class="${clase}">
+${pago.estado}
+</td>
+
+<td>${pago.fecha_hora || '-'}</td>
+
+<td>${pago.comprobante || '-'}</td>
+
+<td>
+
+<a
+class="btn editar"
+href="editar_pago.html?id=${pago.idpago}">
+Editar
+</a>
+
+<button
+class="btn eliminar"
+onclick="eliminar(${pago.idpago})">
+Eliminar
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}catch(error){
+
+tabla.innerHTML=`
+<tr>
+<td colspan="7" class="mensaje">
+No se pudo conectar con el microservicio de Pagos.
+</td>
+</tr>`;
+
+}
+
+}
+
+async function eliminar(id){
+
+if(!confirm('¿Seguro que deseas eliminar este pago?'))
+return;
+
+try{
+
+const respuesta=await fetch(`${API}/${id}`,{
+method:'DELETE'
+});
+
+const datos=await respuesta.json();
+
+if(!respuesta.ok)
+throw new Error(datos.mensaje || 'No se pudo eliminar');
+
+alert('Pago eliminado correctamente');
+
+cargar();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+cargar();
+
+</script>
+
+</body>
+</html>

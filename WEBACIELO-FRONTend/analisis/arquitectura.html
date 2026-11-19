@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura Spark | Acielo Rosa</title>
+    <link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="analisis-premium.css">
+</head>
+
+<body class="spark-premium">
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="index.html" class="activo">Análisis</a>
+    </div>
+</nav>
+
+<main class="dashboard">
+
+    <div class="page-head">
+        <span class="spark-etiqueta">INFRAESTRUCTURA</span>
+        <h1>Arquitectura del sistema</h1>
+        <p>
+            Descubre cómo se conectan las máquinas virtuales,
+            Apache Spark y la API para presentar los resultados.
+        </p>
+    </div>
+
+    <div class="spark-subnav">
+        <a href="index.html">Dashboard</a>
+        <a href="proceso.html">Proceso</a>
+        <a href="arquitectura.html" class="actual">Arquitectura</a>
+        <a href="metodologia.html">Metodología</a>
+    </div>
+
+    <section class="spark-bloque">
+        <h2>Distribución de componentes</h2>
+        <p>
+            WEBACIELO utiliza dos máquinas virtuales Ubuntu
+            con responsabilidades diferentes. Una presenta
+            la interfaz web y la otra ejecuta los servicios
+            que procesan y entregan la información.
+        </p>
+
+        <div class="spark-diagrama">
+
+            <div class="spark-nodo">
+                <strong>Ubuntu1</strong>
+                <span>
+                    192.168.100.2<br>
+                    Frontend web<br>
+                    Puerto 8081
+                </span>
+            </div>
+
+            <div class="spark-flecha">↔</div>
+
+            <div class="spark-nodo">
+                <strong>API de análisis</strong>
+                <span>
+                    Ubuntu2<br>
+                    192.168.100.3<br>
+                    Puerto 3005
+                </span>
+            </div>
+
+            <div class="spark-flecha">↔</div>
+
+            <div class="spark-nodo">
+                <strong>Resultados Spark</strong>
+                <span>
+                    Indicadores calculados<br>
+                    y gráficas generadas
+                </span>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="spark-pasos">
+
+        <article class="spark-paso">
+            <div class="spark-numero">01</div>
+            <h3>Ubuntu1: interfaz web</h3>
+            <p>
+                Aloja las páginas HTML, CSS y JavaScript.
+                El navegador consulta la API de análisis
+                para mostrar las estadísticas.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">02</div>
+            <h3>Ubuntu2: procesamiento</h3>
+            <p>
+                Aloja Apache Spark y los componentes
+                encargados de generar y exponer los resultados
+                del análisis de citas médicas.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">03</div>
+            <h3>Spark Master</h3>
+            <p>
+                Coordina la ejecución de tareas del entorno
+                Spark. En este proyecto, se ejecuta
+                en Ubuntu2.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">04</div>
+            <h3>Spark Worker</h3>
+            <p>
+                Ejecuta las tareas de procesamiento
+                asignadas por Spark. En esta implementación,
+                Master y Worker están alojados
+                en la misma máquina virtual.
+            </p>
+        </article>
+
+    </section>
+
+    <section class="spark-bloque">
+        <h2>Servicios y direcciones</h2>
+
+        <div class="spark-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Componente</th>
+                        <th>Ubicación</th>
+                        <th>Función</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Frontend</td>
+                        <td>192.168.100.2:8081</td>
+                        <td>Presentación de las páginas</td>
+                    </tr>
+                    <tr>
+                        <td>API de análisis</td>
+                        <td>192.168.100.3:3005</td>
+                        <td>Entrega indicadores y gráficas</td>
+                    </tr>
+                    <tr>
+                        <td>Spark Master</td>
+                        <td>192.168.100.3:7077</td>
+                        <td>Coordinación del procesamiento</td>
+                    </tr>
+                    <tr>
+                        <td>Spark Web UI</td>
+                        <td>192.168.100.3:8080</td>
+                        <td>Supervisión del entorno Spark</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="spark-bloque">
+        <h2>¿Por qué se utiliza una API?</h2>
+        <p>
+            La API funciona como intermediaria entre
+            los resultados generados en Ubuntu2 y
+            la interfaz web que se visualiza desde Ubuntu1.
+        </p>
+        <p>
+            Esto permite separar la presentación de los datos
+            de su procesamiento. El navegador no necesita
+            ejecutar Apache Spark para consultar las estadísticas.
+        </p>
+    </section>
+
+    <a class="spark-volver" href="index.html">
+        ← Volver al dashboard
+    </a>
+
+</main>
+</body>
+</html>

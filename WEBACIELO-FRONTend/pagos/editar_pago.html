@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Editar pago | Acielo Rosa</title>
+
+    <link
+        rel="stylesheet"
+        href="../estilos.css">
+    <link rel="stylesheet" href="pagos-premium.css">
+
+</head>
+
+
+<body class="pagos-premium">
+
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="index.html" class="activo">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+
+<main>
+
+
+    <div class="page-head">
+
+        <h2>
+            Editar pago
+        </h2>
+
+        <p class="subtitulo">
+            Actualiza la información del pago.
+        </p>
+
+    </div>
+
+
+    <div class="card form-card">
+
+
+        <form id="formPago">
+
+
+            <div class="campo">
+
+                <label for="idcita">
+                    ID de la cita
+                </label>
+
+                <input
+                    type="number"
+                    id="idcita"
+                    min="1"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="valor">
+                    Valor
+                </label>
+
+                <input
+                    type="number"
+                    id="valor"
+                    min="0"
+                    step="0.01"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="estado">
+                    Estado
+                </label>
+
+                <select
+                    id="estado"
+                    required>
+
+                    <option value="pendiente">
+                        Pendiente
+                    </option>
+
+                    <option value="pagado">
+                        Pagado
+                    </option>
+
+                    <option value="rechazado">
+                        Rechazado
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="fecha_hora">
+                    Fecha y hora
+                </label>
+
+                <input
+                    type="datetime-local"
+                    id="fecha_hora">
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="comprobante">
+                    Comprobante
+                </label>
+
+                <input
+                    type="text"
+                    id="comprobante">
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="submit"
+                    class="btn btn-rosa">
+                    Guardar cambios
+                </button>
+
+
+                <a
+                    href="index.html"
+                    class="btn btn-gris">
+                    Cancelar
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+        <div
+            id="mensaje"
+            class="msg">
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<script src="../api.js"></script>
+
+
+<script>
+
+const parametros =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const id =
+    parametros.get("id");
+
+
+const idcita =
+    document.getElementById(
+        "idcita"
+    );
+
+
+const valor =
+    document.getElementById(
+        "valor"
+    );
+
+
+const estado =
+    document.getElementById(
+        "estado"
+    );
+
+
+const fechaHora =
+    document.getElementById(
+        "fecha_hora"
+    );
+
+
+const comprobante =
+    document.getElementById(
+        "comprobante"
+    );
+
+
+const formulario =
+    document.getElementById(
+        "formPago"
+    );
+
+
+const mensaje =
+    document.getElementById(
+        "mensaje"
+    );
+
+
+function convertirFechaParaInput(
+    fecha
+) {
+
+    if (!fecha) {
+        return "";
+    }
+
+
+    const fechaObjeto =
+        new Date(fecha);
+
+
+    if (isNaN(fechaObjeto)) {
+        return "";
+    }
+
+
+    const year =
+        fechaObjeto.getFullYear();
+
+
+    const month =
+        String(
+            fechaObjeto.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            fechaObjeto.getDate()
+        ).padStart(2, "0");
+
+
+    const hours =
+        String(
+            fechaObjeto.getHours()
+        ).padStart(2, "0");
+
+
+    const minutes =
+        String(
+            fechaObjeto.getMinutes()
+        ).padStart(2, "0");
+
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+
+}
+
+
+async function cargarPago() {
+
+    if (!id) {
+
+        mensaje.className =
+            "msg error";
+
+        mensaje.textContent =
+            "No se encontró el ID del pago.";
+
+        return;
+    }
+
+
+    try {
+
+        const pago =
+            await obtenerDatos(
+                `${API.pagos}/${id}`
+            );
+
+
+        idcita.value =
+            pago.idcita || "";
+
+
+        valor.value =
+            pago.valor || "";
+
+
+        estado.value =
+            pago.estado || "pendiente";
+
+
+        fechaHora.value =
+            convertirFechaParaInput(
+                pago.fecha_hora
+            );
+
+
+        comprobante.value =
+            pago.comprobante || "";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        mensaje.className =
+            "msg error";
+
+        mensaje.textContent =
+            "No se pudo cargar el pago.";
+
+    }
+
+}
+
+
+formulario.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const fechaInput =
+            fechaHora.value;
+
+
+        const datos = {
+
+            idcita:
+                Number(
+                    idcita.value
+                ),
+
+            valor:
+                Number(
+                    valor.value
+                ),
+
+            estado:
+                estado.value,
+
+            fecha_hora:
+                fechaInput
+                    ? new Date(
+                        fechaInput
+                    ).toISOString()
+                    : new Date().toISOString(),
+
+            comprobante:
+                comprobante.value.trim()
+
+        };
+
+
+        try {
+
+            await enviarDatos(
+                `${API.pagos}/${id}`,
+                "PUT",
+                datos
+            );
+
+
+            mensaje.className =
+                "msg ok";
+
+            mensaje.textContent =
+                "Pago actualizado correctamente.";
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "index.html";
+
+            }, 1200);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            mensaje.className =
+                "msg error";
+
+            mensaje.textContent =
+                "No se pudo actualizar el pago: " +
+                error.message;
+
+        }
+
+    }
+);
+
+
+cargarPago();
+
+</script>
+
+</body>
+</html>

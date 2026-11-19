@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios | Acielo Rosa</title>
+    <link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="usuarios-premium.css">
+</head>
+
+<body class="usuarios-premium">
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="index.html" class="activo">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+<main>
+
+    <div class="page-head">
+        <h2>Usuarios</h2>
+
+        <p class="subtitulo">
+            Administración de los usuarios registrados en Acielo Rosa.
+        </p>
+
+        <div class="form-buttons">
+
+            <a href="insertar_usuario.html" class="btn btn-rosa">
+                + Nuevo usuario
+            </a>
+
+            <a href="login.html" class="btn btn-azul">
+                Iniciar sesión
+            </a>
+
+        </div>
+    </div>
+
+    <div class="card table-card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaUsuarios">
+
+                <tr>
+                    <td colspan="5">
+                        Cargando usuarios...
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+<script src="../api.js"></script>
+
+<script>
+
+async function cargarUsuarios() {
+
+    const tabla = document.getElementById("tablaUsuarios");
+
+    try {
+
+        const usuarios = await obtenerDatos(API.usuarios);
+
+        tabla.innerHTML = "";
+
+        if (!usuarios || usuarios.length === 0) {
+
+            tabla.innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        No hay usuarios registrados.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        usuarios.forEach(usuario => {
+
+            tabla.innerHTML += `
+                <tr>
+
+                    <td>${usuario.id}</td>
+
+                    <td>${usuario.nombre}</td>
+
+                    <td>${usuario.email}</td>
+
+                    <td>${usuario.telefono || "Sin teléfono"}</td>
+
+                    <td>
+
+                        <div class="acciones">
+
+                            <a
+                                class="accion editar"
+                                href="editar_usuario.html?id=${usuario.id}">
+                                Editar
+                            </a>
+
+                            <button
+                                class="accion eliminar"
+                                onclick="eliminarUsuario(${usuario.id})">
+                                Eliminar
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        tabla.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    No fue posible cargar los usuarios.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+async function eliminarUsuario(id) {
+
+    const confirmar = confirm(
+        "¿Seguro que deseas eliminar este usuario?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+
+        await enviarDatos(
+            `${API.usuarios}/${id}`,
+            "DELETE",
+            {}
+        );
+
+        alert("Usuario eliminado correctamente.");
+
+        cargarUsuarios();
+
+    } catch (error) {
+
+        alert(
+            "No se pudo eliminar el usuario: " +
+            error.message
+        );
+    }
+}
+
+
+cargarUsuarios();
+
+</script>
+
+</body>
+</html>

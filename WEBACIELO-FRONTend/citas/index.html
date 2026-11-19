@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Citas | Acielo Rosa</title>
+
+    <link
+        rel="stylesheet"
+        href="../estilos.css">
+    <link rel="stylesheet" href="citas-premium.css">
+</head>
+
+<body class="citas-premium">
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="index.html" class="activo">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+
+<main>
+
+    <div class="page-head">
+
+        <h2>
+            Citas
+        </h2>
+
+        <p class="subtitulo">
+            Consulta y administra las citas registradas.
+        </p>
+
+        <div class="form-buttons">
+
+            <a
+                href="insertar_cita.html"
+                class="btn btn-rosa">
+                + Nueva cita
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="card table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody id="tablaCitas">
+
+                <tr>
+
+                    <td colspan="7">
+                        Cargando citas...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+
+<script src="../api.js"></script>
+
+
+<script>
+
+async function cargarCitas() {
+
+    const tabla =
+        document.getElementById("tablaCitas");
+
+
+    try {
+
+        const citas =
+            await obtenerDatos(API.citas);
+
+
+        tabla.innerHTML = "";
+
+
+        if (!citas || citas.length === 0) {
+
+            tabla.innerHTML = `
+                <tr>
+                    <td colspan="7">
+                        No hay citas registradas.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        for (const cita of citas) {
+
+            let nombreUsuario =
+                "Usuario #" + cita.usuario_id;
+
+            let nombreServicio =
+                "Servicio #" + cita.servicio_id;
+
+
+            try {
+
+                const usuario =
+                    await obtenerDatos(
+                        `${API.usuarios}/${cita.usuario_id}`
+                    );
+
+                if (usuario && usuario.nombre) {
+                    nombreUsuario =
+                        usuario.nombre;
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "No se pudo cargar usuario",
+                    error
+                );
+
+            }
+
+
+            try {
+
+                const servicio =
+                    await obtenerDatos(
+                        `${API.servicios}/${cita.servicio_id}`
+                    );
+
+                if (servicio && servicio.nombre) {
+                    nombreServicio =
+                        servicio.nombre;
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "No se pudo cargar servicio",
+                    error
+                );
+
+            }
+
+
+            tabla.innerHTML += `
+                <tr>
+
+                    <td>
+                        ${cita.id_cita}
+                    </td>
+
+                    <td>
+                        ${nombreUsuario}
+                    </td>
+
+                    <td>
+                        ${nombreServicio}
+                    </td>
+
+                    <td>
+                        ${cita.fecha}
+                    </td>
+
+                    <td>
+                        ${cita.hora}
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="estado ${cita.estado}">
+                            ${cita.estado}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="acciones">
+
+                            <button
+                                class="accion eliminar"
+                                onclick="eliminarCita(${cita.id_cita})">
+                                Eliminar
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        tabla.innerHTML = `
+            <tr>
+                <td colspan="7">
+                    No fue posible cargar las citas.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+async function eliminarCita(id) {
+
+    const confirmar =
+        confirm(
+            "¿Seguro que deseas eliminar esta cita?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    try {
+
+        await enviarDatos(
+            `${API.citas}/${id}`,
+            "DELETE",
+            {}
+        );
+
+
+        alert(
+            "Cita eliminada correctamente."
+        );
+
+
+        cargarCitas();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "No se pudo eliminar la cita: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+cargarCitas();
+
+</script>
+
+</body>
+</html>

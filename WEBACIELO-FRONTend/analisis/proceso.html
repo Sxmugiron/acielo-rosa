@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceso de Spark | Acielo Rosa</title>
+    <link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="analisis-premium.css">
+</head>
+
+<body class="spark-premium">
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="index.html" class="activo">Análisis</a>
+    </div>
+</nav>
+
+<main class="dashboard">
+
+    <div class="page-head">
+        <span class="spark-etiqueta">PROCESAMIENTO DE DATOS</span>
+        <h1>¿Cómo funciona Apache Spark?</h1>
+        <p>
+            Conoce el proceso utilizado para transformar un conjunto
+            de datos de citas médicas en estadísticas y visualizaciones.
+        </p>
+    </div>
+
+    <div class="spark-subnav">
+        <a href="index.html">Dashboard</a>
+        <a href="proceso.html" class="actual">Proceso</a>
+        <a href="arquitectura.html">Arquitectura</a>
+        <a href="metodologia.html">Metodología</a>
+    </div>
+
+    <section class="spark-bloque">
+        <h2>¿Qué es Apache Spark?</h2>
+        <p>
+            Apache Spark es un motor de procesamiento de datos
+            que permite realizar operaciones sobre conjuntos
+            de información mediante un sistema de ejecución distribuida.
+        </p>
+        <p>
+            En WEBACIELO se utiliza para analizar un dataset
+            público de citas médicas, calcular indicadores
+            y producir resultados que pueden visualizarse
+            desde el navegador.
+        </p>
+    </section>
+
+    <h2 class="seccion-titulo">Etapas del procesamiento</h2>
+
+    <section class="spark-pasos">
+
+        <article class="spark-paso">
+            <div class="spark-numero">01</div>
+            <h3>Obtención del dataset</h3>
+            <p>
+                Se utiliza el conjunto de datos público
+                Medical Appointment No Shows, disponible
+                en Kaggle, con registros de citas médicas.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">02</div>
+            <h3>Lectura con Spark</h3>
+            <p>
+                El archivo CSV se procesa mediante Apache Spark.
+                Los registros se representan en estructuras
+                que permiten consultar y transformar sus columnas.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">03</div>
+            <h3>Preparación de la información</h3>
+            <p>
+                Se interpretan las variables relevantes,
+                como asistencia, edad, recordatorios SMS
+                y fecha de las citas, para preparar los análisis.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">04</div>
+            <h3>Cálculo de indicadores</h3>
+            <p>
+                Spark permite agrupar registros y obtener
+                cantidades, distribuciones y porcentajes
+                relacionados con la asistencia a las citas.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">05</div>
+            <h3>Generación de resultados</h3>
+            <p>
+                Los resultados del procesamiento se preparan
+                para su consulta mediante archivos de datos
+                y representaciones gráficas.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">06</div>
+            <h3>Visualización web</h3>
+            <p>
+                El frontend solicita los indicadores y las
+                gráficas a una API y los presenta en el
+                dashboard de WEBACIELO.
+            </p>
+        </article>
+
+    </section>
+
+    <section class="spark-bloque">
+        <h2>Flujo general de la información</h2>
+
+        <div class="spark-diagrama">
+            <div class="spark-nodo">
+                <strong>Dataset CSV</strong>
+                <span>Datos públicos de citas médicas</span>
+            </div>
+
+            <div class="spark-flecha">→</div>
+
+            <div class="spark-nodo">
+                <strong>Apache Spark</strong>
+                <span>Lectura, transformación y análisis</span>
+            </div>
+
+            <div class="spark-flecha">→</div>
+
+            <div class="spark-nodo">
+                <strong>Resultados</strong>
+                <span>Indicadores y gráficas</span>
+            </div>
+
+            <div class="spark-flecha">→</div>
+
+            <div class="spark-nodo">
+                <strong>Dashboard</strong>
+                <span>Visualización en WEBACIELO</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="spark-aviso">
+        <strong>Importante:</strong>
+        el análisis utiliza un dataset público de demostración.
+        No corresponde a las citas reales registradas
+        en los microservicios de la Fundación Acielo Rosa.
+    </div>
+
+    <a class="spark-volver" href="index.html">
+        ← Volver al dashboard
+    </a>
+
+</main>
+</body>
+</html>

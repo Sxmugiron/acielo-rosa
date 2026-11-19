@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Editar servicio | Acielo Rosa</title>
+
+    <link
+        rel="stylesheet"
+        href="../estilos.css">
+    <link rel="stylesheet" href="servicios-premium.css">
+
+</head>
+
+<body class="servicios-premium">
+
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="index.html" class="activo">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+
+<main>
+
+
+    <div class="page-head">
+
+        <h2>
+            Editar servicio
+        </h2>
+
+        <p class="subtitulo">
+            Actualiza la información del servicio.
+        </p>
+
+    </div>
+
+
+    <div class="card form-card">
+
+        <form id="formServicio">
+
+
+            <div class="campo">
+
+                <label for="nombre">
+                    Nombre del servicio
+                </label>
+
+                <input
+                    type="text"
+                    id="nombre"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="descripcion">
+                    Descripción
+                </label>
+
+                <textarea
+                    id="descripcion">
+                </textarea>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="precio">
+                    Precio
+                </label>
+
+                <input
+                    type="number"
+                    id="precio"
+                    min="0"
+                    step="0.01"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="cupo_mensual">
+                    Cupo mensual
+                </label>
+
+                <input
+                    type="number"
+                    id="cupo_mensual"
+                    min="1"
+                    required>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="submit"
+                    class="btn btn-rosa">
+                    Guardar cambios
+                </button>
+
+                <a
+                    href="index.html"
+                    class="btn btn-gris">
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
+
+        <div
+            id="mensaje"
+            class="msg">
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="../api.js"></script>
+
+
+<script>
+
+const parametros =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const id =
+    parametros.get("id");
+
+
+const nombre =
+    document.getElementById("nombre");
+
+const descripcion =
+    document.getElementById("descripcion");
+
+const precio =
+    document.getElementById("precio");
+
+const cupoMensual =
+    document.getElementById("cupo_mensual");
+
+const formulario =
+    document.getElementById("formServicio");
+
+const mensaje =
+    document.getElementById("mensaje");
+
+
+async function cargarServicio() {
+
+    if (!id) {
+
+        mensaje.className =
+            "msg error";
+
+        mensaje.textContent =
+            "No se encontró el ID del servicio.";
+
+        return;
+    }
+
+
+    try {
+
+        const servicio =
+            await obtenerDatos(
+                `${API.servicios}/${id}`
+            );
+
+
+        nombre.value =
+            servicio.nombre || "";
+
+        descripcion.value =
+            servicio.descripcion || "";
+
+        precio.value =
+            servicio.precio || "";
+
+        cupoMensual.value =
+            servicio.cupo_mensual || 15;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        mensaje.className =
+            "msg error";
+
+        mensaje.textContent =
+            "No se pudo cargar el servicio.";
+
+    }
+
+}
+
+
+formulario.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const datos = {
+
+            nombre:
+                nombre.value.trim(),
+
+            descripcion:
+                descripcion.value.trim(),
+
+            precio:
+                Number(precio.value),
+
+            cupo_mensual:
+                Number(cupoMensual.value)
+
+        };
+
+
+        try {
+
+            await enviarDatos(
+                `${API.servicios}/${id}`,
+                "PUT",
+                datos
+            );
+
+
+            mensaje.className =
+                "msg ok";
+
+            mensaje.textContent =
+                "Servicio actualizado correctamente.";
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "index.html";
+
+            }, 1200);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            mensaje.className =
+                "msg error";
+
+            mensaje.textContent =
+                "No se pudo actualizar el servicio: " +
+                error.message;
+
+        }
+
+    }
+);
+
+
+cargarServicio();
+
+</script>
+
+</body>
+</html>

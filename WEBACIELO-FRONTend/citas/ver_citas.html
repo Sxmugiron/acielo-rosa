@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citas | Acielo Rosa</title>
+<link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="citas-premium.css">
+<style>
+.tabla{margin-top:35px;background:white;border-radius:24px;padding:25px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:850px}
+th{padding:15px;text-align:left;background:#f8e4ed;color:#8f4164}
+td{padding:15px;border-bottom:1px solid #f0e7eb}
+.btn{border:0;padding:8px 13px;border-radius:20px;font-weight:bold;cursor:pointer}
+.cancelar{background:#fde5e5;color:#a33b3b}
+.mensaje{text-align:center;padding:25px;color:#777}
+.volver{display:inline-block;margin-top:25px;color:#c24b7c;text-decoration:none;font-weight:bold}
+</style>
+</head>
+
+<body class="citas-premium">
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="index.html" class="activo">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+<main>
+
+<div class="page-head">
+<span>CITAS</span>
+<h1>Citas registradas</h1>
+<p>Consulta las citas del sistema.</p>
+</div>
+
+<div class="tabla">
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Usuario</th>
+<th>Servicio</th>
+<th>Fecha</th>
+<th>Hora</th>
+<th>Estado</th>
+<th>Acción</th>
+</tr>
+</thead>
+
+<tbody id="tabla">
+<tr><td colspan="7" class="mensaje">Cargando...</td></tr>
+</tbody>
+</table>
+</div>
+
+<a href="index.html" class="volver">← Volver a Citas</a>
+
+</main>
+
+<footer><p>Acielo Rosa · Sistema de gestión</p></footer>
+
+<script>
+
+const API='http://192.168.100.3:3003/api/citas';
+
+async function cargar(){
+
+const tabla=document.getElementById('tabla');
+
+try{
+
+const r=await fetch(API);
+if(!r.ok) throw new Error();
+
+const citas=await r.json();
+
+tabla.innerHTML='';
+
+if(citas.length===0){
+tabla.innerHTML='<tr><td colspan="7" class="mensaje">No hay citas registradas.</td></tr>';
+return;
+}
+
+citas.forEach(cita=>{
+
+tabla.innerHTML+=`
+<tr>
+<td>${cita.id_cita}</td>
+<td>${cita.usuario_id}</td>
+<td>${cita.servicio_id}</td>
+<td>${cita.fecha}</td>
+<td>${cita.hora}</td>
+<td>${cita.estado}</td>
+<td>
+<button class="btn cancelar"
+onclick="cancelar(${cita.id_cita})">
+Cancelar
+</button>
+</td>
+</tr>`;
+
+});
+
+}catch(e){
+
+tabla.innerHTML='<tr><td colspan="7" class="mensaje">No se pudo conectar con Citas.</td></tr>';
+
+}
+
+}
+
+async function cancelar(id){
+
+if(!confirm('¿Cancelar esta cita?')) return;
+
+try{
+
+const r=await fetch(`${API}/${id}`,{
+method:'PUT',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({estado:'cancelada'})
+});
+
+if(!r.ok) throw new Error();
+
+alert('Cita cancelada correctamente');
+cargar();
+
+}catch(e){
+alert('No se pudo cancelar la cita');
+}
+
+}
+
+cargar();
+
+</script>
+
+</body>
+</html>

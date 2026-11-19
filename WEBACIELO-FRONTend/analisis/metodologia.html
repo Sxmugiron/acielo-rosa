@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodología Spark | Acielo Rosa</title>
+    <link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="analisis-premium.css">
+</head>
+
+<body class="spark-premium">
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="index.html" class="activo">Análisis</a>
+    </div>
+</nav>
+
+<main class="dashboard">
+
+    <div class="page-head">
+        <span class="spark-etiqueta">METODOLOGÍA Y RESULTADOS</span>
+        <h1>Comprendiendo los datos</h1>
+        <p>
+            Conoce el origen de la información, los
+            indicadores analizados y el significado
+            de las visualizaciones generadas.
+        </p>
+    </div>
+
+    <div class="spark-subnav">
+        <a href="index.html">Dashboard</a>
+        <a href="proceso.html">Proceso</a>
+        <a href="arquitectura.html">Arquitectura</a>
+        <a href="metodologia.html" class="actual">Metodología</a>
+    </div>
+
+    <section class="spark-bloque">
+        <h2>Origen del dataset</h2>
+
+        <p>
+            Se utiliza el conjunto de datos
+            <strong>Medical Appointment No Shows</strong>,
+            disponible públicamente en Kaggle.
+            Contiene 110.527 registros de citas médicas.
+        </p>
+
+        <p>
+            Este dataset permite estudiar patrones
+            relacionados con la asistencia de pacientes
+            a citas médicas.
+        </p>
+
+        <div>
+            <span class="spark-dato">110.527 registros</span>
+            <span class="spark-dato">Citas médicas</span>
+            <span class="spark-dato">Dataset público</span>
+            <span class="spark-dato">Apache Spark</span>
+        </div>
+    </section>
+
+    <section class="spark-bloque">
+        <h2>Indicadores principales</h2>
+
+        <div class="spark-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Indicador</th>
+                        <th>¿Qué representa?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Total de citas</td>
+                        <td>Cantidad total de registros analizados.</td>
+                    </tr>
+                    <tr>
+                        <td>Asistieron</td>
+                        <td>Citas clasificadas como asistencia.</td>
+                    </tr>
+                    <tr>
+                        <td>No asistieron</td>
+                        <td>Citas clasificadas como inasistencia.</td>
+                    </tr>
+                    <tr>
+                        <td>Porcentaje de asistencia</td>
+                        <td>Proporción de citas con asistencia respecto al total.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <h2 class="seccion-titulo">¿Qué muestran las gráficas?</h2>
+
+    <section class="spark-pasos">
+
+        <article class="spark-paso">
+            <div class="spark-numero">01</div>
+            <h3>Asistencia e inasistencia</h3>
+            <p>
+                Compara los registros clasificados
+                como asistencia con los de inasistencia,
+                permitiendo observar su distribución general.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">02</div>
+            <h3>Inasistencia por edades</h3>
+            <p>
+                Permite explorar cómo se distribuyen
+                las ausencias a citas médicas
+                según los grupos o valores de edad.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">03</div>
+            <h3>Recordatorios SMS</h3>
+            <p>
+                Presenta información relacionada
+                con el envío de recordatorios SMS
+                y la asistencia o inasistencia.
+            </p>
+        </article>
+
+        <article class="spark-paso">
+            <div class="spark-numero">04</div>
+            <h3>Citas por día de la semana</h3>
+            <p>
+                Muestra la distribución de las citas
+                de acuerdo con el día de la semana
+                para observar diferencias en el volumen.
+            </p>
+        </article>
+
+    </section>
+
+    <section class="spark-bloque">
+        <h2>¿Qué demuestra esta implementación?</h2>
+
+        <p>
+            El proyecto demuestra la integración de
+            un motor de procesamiento de datos,
+            una API y una interfaz web dentro
+            de una arquitectura basada en máquinas virtuales.
+        </p>
+
+        <p>
+            Los resultados pueden consultarse desde
+            el navegador sin necesidad de ejecutar
+            manualmente los análisis en cada visita.
+        </p>
+    </section>
+
+    <div class="spark-aviso">
+        <strong>Aclaración metodológica:</strong>
+        las visualizaciones permiten describir patrones
+        del dataset, pero no demuestran por sí solas
+        relaciones de causa y efecto.
+        Los datos no representan pacientes reales
+        de la Fundación Acielo Rosa.
+    </div>
+
+    <a class="spark-volver" href="index.html">
+        ← Volver al dashboard
+    </a>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios | Acielo Rosa</title>
+    <link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="servicios-premium.css">
+</head>
+
+<body class="servicios-premium">
+
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="index.html" class="activo">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="../analisis/index.html">Análisis</a>
+    </div>
+</nav>
+
+
+<main>
+
+    <div class="page-head">
+
+        <h2>Servicios</h2>
+
+        <p class="subtitulo">
+            Consulta y administra los servicios ofrecidos por Acielo Rosa.
+        </p>
+
+        <div class="form-buttons">
+
+            <a href="insertar_servicio.html" class="btn btn-rosa">
+                + Nuevo servicio
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="card table-card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Servicio</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cupo mensual</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaServicios">
+
+                <tr>
+                    <td colspan="6">
+                        Cargando servicios...
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+
+<script src="../api.js"></script>
+
+<script>
+
+async function cargarServicios() {
+
+    const tabla =
+        document.getElementById("tablaServicios");
+
+    try {
+
+        const servicios =
+            await obtenerDatos(API.servicios);
+
+        tabla.innerHTML = "";
+
+        if (!servicios || servicios.length === 0) {
+
+            tabla.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        No hay servicios registrados.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        servicios.forEach(servicio => {
+
+            tabla.innerHTML += `
+                <tr>
+
+                    <td>${servicio.id}</td>
+
+                    <td>
+                        <strong>${servicio.nombre}</strong>
+                    </td>
+
+                    <td>
+                        ${servicio.descripcion || "Sin descripción"}
+                    </td>
+
+                    <td>
+                        $${Number(servicio.precio).toLocaleString("es-CO")}
+                    </td>
+
+                    <td>
+                        ${servicio.cupo_mensual}
+                    </td>
+
+                    <td>
+
+                        <div class="acciones">
+
+                            <a
+                                class="accion editar"
+                                href="editar_servicio.html?id=${servicio.id}">
+                                Editar
+                            </a>
+
+                            <button
+                                class="accion eliminar"
+                                onclick="eliminarServicio(${servicio.id})">
+                                Eliminar
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        tabla.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    No fue posible cargar los servicios.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+async function eliminarServicio(id) {
+
+    const confirmar =
+        confirm(
+            "¿Seguro que deseas eliminar este servicio?"
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    try {
+
+        await enviarDatos(
+            `${API.servicios}/${id}`,
+            "DELETE",
+            {}
+        );
+
+        alert(
+            "Servicio eliminado correctamente."
+        );
+
+        cargarServicios();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "No se pudo eliminar el servicio: " +
+            error.message
+        );
+    }
+}
+
+
+cargarServicios();
+
+</script>
+
+</body>
+</html>

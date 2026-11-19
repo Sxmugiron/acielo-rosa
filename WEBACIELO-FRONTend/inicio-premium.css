@@ -1,0 +1,271 @@
+/* ==========================================
+   WEBACIELO | DISEÑO PREMIUM DE INICIO
+   Fundación Acielo Rosa
+========================================== */
+
+:root {
+    --rosa: #c66c94;
+    --rosa-claro: #f8e1eb;
+    --lavanda: #e9ddf8;
+    --violeta: #8d6ca9;
+    --texto: #40364b;
+    --gris: #7e7888;
+    --blanco: #ffffff;
+}
+
+body.inicio-premium {
+    color: var(--texto);
+    background:
+        radial-gradient(circle at 5% 12%, #f9dfeb 0, transparent 32%),
+        radial-gradient(circle at 94% 18%, #e9ddfa 0, transparent 33%),
+        linear-gradient(145deg, #fffafd, #f9f6ff);
+}
+
+/* NAVEGACIÓN */
+
+.inicio-premium nav {
+    max-width: 1240px;
+    padding: 17px 28px;
+    border-radius: 22px;
+    border: 1px solid #ffffff;
+    box-shadow: 0 12px 38px rgba(113, 78, 126, .09);
+}
+
+.inicio-premium .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 25px;
+    color: var(--rosa);
+}
+
+.inicio-premium .logo::before {
+    content: "♡";
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: var(--rosa-claro);
+    font-family: Arial, sans-serif;
+    font-size: 29px;
+}
+
+.inicio-premium .menu a {
+    font-weight: 600;
+    transition: .25s ease;
+}
+
+.inicio-premium .menu a:hover,
+.inicio-premium .menu a.activo {
+    background: #f7e1eb;
+    color: #a94f79;
+}
+
+/* CONTENEDOR */
+
+.inicio-premium main {
+    max-width: 1240px;
+    margin-top: 35px;
+}
+
+/* PORTADA */
+
+.inicio-premium .hero {
+    min-height: 540px;
+    padding: 75px 75px;
+    border-radius: 36px;
+    background:
+        radial-gradient(circle at 90% 30%, #e9dcf7 0, transparent 38%),
+        linear-gradient(115deg, #ffffff 5%, #fff4f9 65%, #f6eafa);
+    box-shadow: 0 22px 65px rgba(126, 87, 139, .11);
+}
+
+.inicio-premium .hero::after {
+    width: 340px;
+    height: 340px;
+    right: -60px;
+    top: 55px;
+    background: linear-gradient(135deg, #f4cbdc, #d9c9f3);
+    opacity: .7;
+}
+
+.inicio-premium .hero::before {
+    content: "♡";
+    right: 80px;
+    bottom: 60px;
+    font-size: 190px;
+    color: rgba(255, 255, 255, .75);
+}
+
+.inicio-premium .hero-text {
+    max-width: 720px;
+}
+
+.inicio-premium .hero h1 {
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    color: #44324c;
+}
+
+.inicio-premium .hero h1 span {
+    color: var(--rosa);
+}
+
+.inicio-premium .hero p {
+    max-width: 560px;
+    font-size: 17px;
+    color: #746a7c;
+}
+
+.inicio-premium .estado {
+    background: #f9e3ec;
+    color: #a75077;
+    padding: 10px 17px;
+    font-size: 12px;
+    letter-spacing: .8px;
+}
+
+/* BOTONES */
+
+.inicio-premium .btn {
+    min-height: 49px;
+    padding: 13px 23px;
+    border-radius: 14px;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.inicio-premium .btn:hover {
+    transform: translateY(-4px);
+}
+
+.inicio-premium .btn-rosa {
+    background: linear-gradient(135deg, #d57fa5, #b95e88);
+    box-shadow: 0 10px 25px rgba(185, 94, 136, .22);
+}
+
+.inicio-premium .btn-azul {
+    background: linear-gradient(135deg, #aa91d0, #876cb0);
+    box-shadow: 0 10px 25px rgba(135, 108, 176, .20);
+}
+
+/* ENCABEZADO DE MÓDULOS */
+
+.inicio-premium .page-head {
+    margin-top: 70px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.inicio-premium .page-head h2 {
+    font-size: 39px;
+    color: #44334d;
+}
+
+.inicio-premium .page-head p {
+    color: var(--gris);
+    font-size: 16px;
+}
+
+/* TARJETAS */
+
+.inicio-premium .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 23px;
+}
+
+.inicio-premium .card {
+    display: flex;
+    flex-direction: column;
+    min-height: 275px;
+    padding: 30px;
+    border-radius: 26px;
+    border: 1px solid #f2e8f2;
+    background: rgba(255, 255, 255, .96);
+    box-shadow: 0 12px 38px rgba(92, 68, 105, .07);
+}
+
+.inicio-premium .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(131, 84, 144, .15);
+    border-color: #eac8df;
+}
+
+.inicio-premium .card h3 {
+    color: #503e5b;
+    font-size: 24px;
+}
+
+.inicio-premium .card p {
+    color: #807788;
+    font-size: 14px;
+    line-height: 1.8;
+    min-height: 0;
+    flex-grow: 1;
+}
+
+.inicio-premium .card .btn {
+    align-self: flex-start;
+    margin-top: 18px;
+}
+
+/* PIE DE PÁGINA */
+
+.inicio-premium .pie-inicio {
+    margin-top: 75px;
+    padding: 28px 15px;
+    text-align: center;
+    border-top: 1px solid #eaddf0;
+    color: #94869b;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .inicio-premium .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .inicio-premium .hero {
+        padding: 55px 45px;
+    }
+}
+
+@media (max-width: 760px) {
+    .inicio-premium nav {
+        padding: 15px;
+    }
+
+    .inicio-premium .hero {
+        padding: 45px 27px;
+        min-height: 470px;
+    }
+
+    .inicio-premium .hero h1 {
+        font-size: 43px;
+        letter-spacing: -1px;
+    }
+
+    .inicio-premium .hero::after {
+        width: 210px;
+        height: 210px;
+        right: -90px;
+        top: 30px;
+    }
+
+    .inicio-premium .hero::before {
+        font-size: 100px;
+        right: 25px;
+        bottom: 15px;
+    }
+
+    .inicio-premium .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .inicio-premium .page-head h2 {
+        font-size: 31px;
+    }
+}

@@ -1,0 +1,524 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'DM Sans', Arial, sans-serif;
+    color: #333;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(247, 211, 225, 0.45), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(213, 235, 247, 0.55), transparent 30%),
+        linear-gradient(135deg, #fff8fb, #f1f9ff);
+    min-height: 100vh;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav {
+    max-width: 1180px;
+    margin: 22px auto 0;
+    padding: 14px 20px;
+
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+
+    box-shadow: 0 10px 35px rgba(80, 80, 100, 0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 27px;
+    color: #b85f80;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #626262;
+    padding: 9px 13px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.menu a:hover,
+.menu a.activo {
+    background: #f7dce7;
+    color: #a84f72;
+}
+
+/* =========================
+   CONTENIDO
+========================= */
+
+main {
+    max-width: 1180px;
+    margin: 42px auto;
+    padding: 0 20px 60px;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+h1 {
+    margin: 18px 0;
+    font-size: 58px;
+    line-height: 1.03;
+    letter-spacing: -1.5px;
+}
+
+h2 {
+    margin: 0;
+    font-size: 34px;
+}
+
+h3 {
+    font-size: 23px;
+    margin: 0 0 12px;
+}
+
+.subtitulo {
+    color: #747474;
+    line-height: 1.7;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 470px;
+    padding: 65px 70px;
+
+    border-radius: 32px;
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(255, 248, 251, 0.94)
+        );
+
+    box-shadow: 0 18px 50px rgba(70, 70, 90, 0.10);
+
+    display: flex;
+    align-items: center;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+
+    width: 390px;
+    height: 390px;
+
+    right: -90px;
+    top: -90px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(244, 194, 213, 0.65),
+            rgba(185, 219, 237, 0.55)
+        );
+}
+
+.hero::before {
+    content: "♡";
+
+    position: absolute;
+    right: 110px;
+    bottom: 50px;
+
+    font-size: 145px;
+    color: rgba(255, 255, 255, 0.8);
+
+    z-index: 2;
+}
+
+.hero-text {
+    max-width: 690px;
+    position: relative;
+    z-index: 3;
+}
+
+.hero p {
+    max-width: 650px;
+    margin-bottom: 28px;
+    font-size: 17px;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* =========================
+   ETIQUETAS
+========================= */
+
+.estado {
+    display: inline-block;
+
+    padding: 7px 13px;
+
+    border-radius: 999px;
+
+    background: #f8dfe8;
+    color: #a65373;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding: 11px 19px;
+
+    border: none;
+    border-radius: 13px;
+
+    text-decoration: none;
+
+    font: 600 14px 'DM Sans', sans-serif;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        opacity 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.btn-rosa {
+    color: white;
+    background: linear-gradient(135deg, #c96f92, #b95d80);
+    box-shadow: 0 7px 18px rgba(185, 93, 128, 0.22);
+}
+
+.btn-azul {
+    color: white;
+    background: linear-gradient(135deg, #91bfd7, #75a9c5);
+    box-shadow: 0 7px 18px rgba(117, 169, 197, 0.22);
+}
+
+.btn-gris {
+    color: #444;
+    background: #eeeeee;
+}
+
+/* =========================
+   ENCABEZADOS
+========================= */
+
+.page-head {
+    margin-top: 55px;
+    margin-bottom: 25px;
+}
+
+.page-head p {
+    margin: 7px 0 0;
+}
+
+/* =========================
+   TARJETAS
+========================= */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+
+    gap: 18px;
+}
+
+.card {
+    position: relative;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-radius: 22px;
+
+    padding: 25px;
+
+    box-shadow: 0 9px 30px rgba(60, 70, 90, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 16px 35px rgba(60, 70, 90, 0.12);
+}
+
+.card p {
+    color: #777;
+    line-height: 1.6;
+    min-height: 76px;
+}
+
+.card .btn {
+    margin-top: 7px;
+}
+
+/* =========================
+   TABLAS
+========================= */
+
+.table-card {
+    overflow-x: auto;
+    padding: 0;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th,
+td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+th {
+    background: #faf7f9;
+    color: #555;
+    font-weight: 700;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+
+.form-card {
+    max-width: 760px;
+}
+
+form {
+    display: grid;
+    gap: 16px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #dedede;
+
+    border-radius: 13px;
+
+    font: inherit;
+
+    background: white;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #c97998;
+
+    box-shadow:
+        0 0 0 4px rgba(201, 121, 152, 0.11);
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* =========================
+   ACCIONES
+========================= */
+
+.acciones {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.accion {
+    border: 0;
+    border-radius: 9px;
+    padding: 7px 10px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.editar {
+    background: #e5f2f8;
+    color: #4d7890;
+}
+
+.eliminar {
+    background: #fbe6e6;
+    color: #a84f4f;
+}
+
+.leer {
+    background: #e6f4e9;
+    color: #4e8059;
+}
+
+/* =========================
+   MENSAJES
+========================= */
+
+.msg {
+    margin-top: 14px;
+    padding: 11px 13px;
+    border-radius: 10px;
+    display: none;
+}
+
+.msg.ok {
+    display: block;
+    background: #e7f5ea;
+    color: #46724f;
+}
+
+.msg.error {
+    display: block;
+    background: #fbe5e5;
+    color: #9a4b4b;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-card {
+    max-width: 470px;
+    margin: 60px auto;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 760px) {
+
+    nav {
+        margin: 10px;
+        padding: 12px;
+
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .menu {
+        justify-content: flex-start;
+    }
+
+    main {
+        margin: 25px auto;
+    }
+
+    .hero {
+        padding: 38px 27px;
+        min-height: 430px;
+    }
+
+    h1 {
+        font-size: 43px;
+    }
+
+    h2 {
+        font-size: 29px;
+    }
+
+    .hero::after {
+        width: 250px;
+        height: 250px;
+    }
+
+    .hero::before {
+        font-size: 90px;
+        right: 35px;
+        bottom: 30px;
+    }
+}

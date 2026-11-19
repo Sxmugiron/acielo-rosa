@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acielo Rosa | Análisis de Citas</title>
+    <link rel="stylesheet" href="../estilos.css">
+    <style>
+        .dashboard {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px 50px;
+        }
+
+        .indicadores, .graficas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .indicador, .grafica {
+            background: white;
+            border-radius: 15px;
+            padding: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .indicador h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .indicador strong {
+            font-size: 30px;
+            color: #b54882;
+        }
+
+        .grafica img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .mensaje {
+            margin: 15px 0;
+        }
+    </style>
+    <link rel="stylesheet" href="analisis-premium.css">
+</head>
+<body class="spark-premium">
+
+<nav>
+    <div class="logo">Acielo Rosa</div>
+    <div class="menu">
+        <a href="../index.html">Inicio</a>
+        <a href="../usuarios/index.html">Usuarios</a>
+        <a href="../servicios/index.html">Servicios</a>
+        <a href="../citas/index.html">Citas</a>
+        <a href="../pagos/index.html">Pagos</a>
+        <a href="index.html" class="activo">Análisis de Citas</a>
+    </div>
+</nav>
+
+<main class="dashboard">
+    <div class="page-head">
+        <span class="spark-etiqueta">APACHE SPARK · BIG DATA</span>
+        <h1>Dashboard de Análisis de Citas</h1>
+        <p class="subtitulo">
+            Estadísticas procesadas con Apache Spark.
+            Fundación Acielo Rosa.
+        </p>
+    </div>
+
+    <p id="mensaje" class="mensaje" role="status">
+        Cargando resultados de Apache Spark...
+    </p>
+
+    <section class="indicadores">
+        <div class="indicador">
+            <h3>Total de citas</h3>
+            <strong id="total">--</strong>
+        </div>
+
+        <div class="indicador">
+            <h3>Asistieron</h3>
+            <strong id="asistieron">--</strong>
+        </div>
+
+        <div class="indicador">
+            <h3>No asistieron</h3>
+            <strong id="faltaron">--</strong>
+        </div>
+
+        <div class="indicador">
+            <h3>Porcentaje de asistencia</h3>
+            <strong id="porcentaje">--</strong>
+        </div>
+    </section>
+
+    <h2 class="seccion-titulo">Gráficas de Apache Spark</h2>
+
+    <section class="graficas">
+        <div class="grafica">
+            <h3>Asistencia e inasistencia</h3>
+            <img id="grafica-asistencia" alt="Gráfica de asistencia">
+        </div>
+
+        <div class="grafica">
+            <h3>Inasistencia por edades</h3>
+            <img id="grafica-edad" alt="Gráfica por edades">
+        </div>
+
+        <div class="grafica">
+            <h3>Recordatorios SMS</h3>
+            <img id="grafica-sms" alt="Gráfica de SMS">
+        </div>
+
+        <div class="grafica">
+            <h3>Citas por día de la semana</h3>
+            <img id="grafica-dias" alt="Gráfica por día">
+        </div>
+    </section>
+
+
+    <h2 class="seccion-titulo">Explora nuestro proyecto</h2>
+
+    <section class="enlaces-spark">
+        <a class="enlace-spark" href="proceso.html">
+            <strong>¿Cómo funciona Spark?</strong>
+            <span>Conoce el procesamiento de los datos paso a paso.</span>
+        </a>
+
+        <a class="enlace-spark" href="arquitectura.html">
+            <strong>Arquitectura del sistema</strong>
+            <span>Descubre cómo se conectan los servidores y servicios.</span>
+        </a>
+
+        <a class="enlace-spark" href="metodologia.html">
+            <strong>Metodología y resultados</strong>
+            <span>Explora el dataset, los indicadores y las gráficas.</span>
+        </a>
+    </section>
+
+    <p class="subtitulo">
+        Fuente: Kaggle Medical Appointment No Shows.
+        Resultados obtenidos mediante Apache Spark.
+    </p>
+</main>
+
+<script src="../api.js"></script>
+<script>
+    async function cargarDashboard() {
+        const mensaje = document.getElementById("mensaje");
+
+        try {
+            const datos = await obtenerDatos(API.analisis);
+            const formato = new Intl.NumberFormat("es-CO");
+
+            document.getElementById("total").textContent =
+                formato.format(datos.total_citas);
+
+            document.getElementById("asistieron").textContent =
+                formato.format(datos.asistieron);
+
+            document.getElementById("faltaron").textContent =
+                formato.format(datos.no_asistieron);
+
+            document.getElementById("porcentaje").textContent =
+                datos.porcentaje_asistencia.toLocaleString("es-CO") + "%";
+
+            document.getElementById("grafica-asistencia").src =
+                API.graficas.asistencia;
+
+            document.getElementById("grafica-edad").src =
+                API.graficas.edad;
+
+            document.getElementById("grafica-sms").src =
+                API.graficas.sms;
+
+            document.getElementById("grafica-dias").src =
+                API.graficas.dias;
+
+            mensaje.textContent = "Resultados cargados correctamente.";
+        } catch (error) {
+            mensaje.textContent =
+                "No se pudieron cargar los resultados de Apache Spark.";
+            console.error(error);
+        }
+    }
+
+    cargarDashboard();
+</script>
+
+<script src="spark-visor.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Editar usuario | Acielo Rosa</title>
+
+    <link
+        rel="stylesheet"
+        href="../estilos.css">
+    <link rel="stylesheet" href="usuarios-premium.css">
+
+</head>
+
+<body class="usuarios-premium">
+
+
+<nav>
+
+    <div class="logo">
+        Acielo Rosa
+    </div>
+
+
+    <div class="menu">
+
+        <a href="../index.html">
+            Inicio
+        </a>
+
+        <a href="index.html" class="activo">
+            Usuarios
+        </a>
+
+        <a href="../servicios/index.html">
+            Servicios
+        </a>
+
+        <a href="../citas/index.html">
+            Citas
+        </a>
+
+        <a href="../pagos/index.html">
+            Pagos
+        </a>
+
+        <a href="../analisis/index.html">Análisis</a>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+
+    <div class="page-head">
+
+        <h2>
+            Editar usuario
+        </h2>
+
+        <p class="subtitulo">
+            Actualiza la información del usuario.
+        </p>
+
+    </div>
+
+
+    <div class="card form-card">
+
+        <form id="formEditar">
+
+
+            <div class="campo">
+
+                <label for="nombre">
+                    Nombre
+                </label>
+
+                <input
+                    type="text"
+                    id="nombre"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="email">
+                    Correo electrónico
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="telefono">
+                    Teléfono
+                </label>
+
+                <input
+                    type="text"
+                    id="telefono">
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="password">
+                    Nueva contraseña
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Dejar vacío para conservar la actual">
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="submit"
+                    class="btn btn-rosa">
+                    Guardar cambios
+                </button>
+
+
+                <a
+                    href="index.html"
+                    class="btn btn-gris">
+                    Cancelar
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+        <div
+            id="mensaje"
+            class="msg">
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<script src="../api.js"></script>
+
+
+<script>
+
+const parametros =
+    new URLSearchParams(window.location.search);
+
+const id =
+    parametros.get("id");
+
+
+const nombre =
+    document.getElementById("nombre");
+
+const email =
+    document.getElementById("email");
+
+const telefono =
+    document.getElementById("telefono");
+
+const password =
+    document.getElementById("password");
+
+const formulario =
+    document.getElementById("formEditar");
+
+const mensaje =
+    document.getElementById("mensaje");
+
+
+async function cargarUsuario() {
+
+    if (!id) {
+
+        mensaje.className = "msg error";
+
+        mensaje.textContent =
+            "No se encontró el ID del usuario.";
+
+        return;
+    }
+
+
+    try {
+
+        const usuario =
+            await obtenerDatos(
+                `${API.usuarios}/${id}`
+            );
+
+
+        nombre.value =
+            usuario.nombre || "";
+
+        email.value =
+            usuario.email || "";
+
+        telefono.value =
+            usuario.telefono || "";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        mensaje.className =
+            "msg error";
+
+        mensaje.textContent =
+            "No se pudo cargar el usuario.";
+
+    }
+
+}
+
+
+formulario.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const datos = {
+
+            nombre: nombre.value.trim(),
+
+            email: email.value.trim(),
+
+            telefono: telefono.value.trim()
+
+        };
+
+
+        if (password.value.trim() !== "") {
+
+            datos.password =
+                password.value;
+
+        }
+
+
+        try {
+
+            await enviarDatos(
+                `${API.usuarios}/${id}`,
+                "PUT",
+                datos
+            );
+
+
+            mensaje.className =
+                "msg ok";
+
+            mensaje.textContent =
+                "Usuario actualizado correctamente.";
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "index.html";
+
+            }, 1200);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            mensaje.className =
+                "msg error";
+
+            mensaje.textContent =
+                "No se pudo actualizar el usuario: " +
+                error.message;
+
+        }
+
+    }
+);
+
+
+cargarUsuario();
+
+</script>
+
+</body>
+</html>

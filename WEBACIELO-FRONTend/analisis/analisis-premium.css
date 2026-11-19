@@ -1,0 +1,507 @@
+/* WEBACIELO - ANALISIS SPARK PREMIUM */
+
+body.spark-premium {
+    background:
+        radial-gradient(circle at 8% 12%, #f9dfe9, transparent 32%),
+        radial-gradient(circle at 92% 15%, #e9ddf8, transparent 35%),
+        linear-gradient(135deg, #fffafd, #f8f5ff);
+    color: #493950;
+}
+
+.spark-premium nav {
+    max-width: 1240px;
+    padding: 17px 28px;
+    border-radius: 22px;
+    box-shadow: 0 12px 38px rgba(113,78,126,.09);
+}
+
+.spark-premium .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c66c94;
+}
+
+.spark-premium .logo::before {
+    content: "♡";
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: #f8e1eb;
+    font-size: 29px;
+}
+
+.spark-premium .menu a.activo,
+.spark-premium .menu a:hover {
+    background: #f7e1eb;
+    color: #a94f79;
+}
+
+.spark-premium .dashboard {
+    max-width: 1240px;
+    margin: 30px auto;
+    padding: 0 22px 60px;
+}
+
+.spark-premium .page-head {
+    padding: 42px;
+    border-radius: 28px;
+    background: linear-gradient(115deg, #fff, #fff1f8, #f0e7fa);
+    border: 1px solid #f4e7f1;
+    box-shadow: 0 15px 45px rgba(113,78,126,.08);
+}
+
+.spark-premium .page-head h1 {
+    color: #493650;
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.15;
+}
+
+.spark-premium .page-head p {
+    color: #82768b;
+    line-height: 1.7;
+}
+
+.spark-premium .spark-etiqueta {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 9px 15px;
+    border-radius: 999px;
+    background: #f8dce9;
+    color: #a75078;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.spark-premium .indicadores,
+.spark-premium .graficas {
+    display: grid;
+    gap: 22px;
+    margin: 28px 0 38px;
+}
+
+.spark-premium .indicadores {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.spark-premium .graficas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.spark-premium .indicador,
+.spark-premium .grafica {
+    min-width: 0;
+    background: #fff;
+    border: 1px solid #f1e7f0;
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 15px 45px rgba(92,68,105,.08);
+    transition: transform .25s, box-shadow .25s;
+}
+
+.spark-premium .indicador:hover,
+.spark-premium .grafica:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 50px rgba(92,68,105,.13);
+}
+
+.spark-premium .indicador h3 {
+    color: #82748a;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.spark-premium .indicador strong {
+    color: #b95e88;
+    font-size: clamp(25px, 2.8vw, 37px);
+    font-weight: 800;
+}
+
+.spark-premium .grafica h3 {
+    color: #594464;
+    margin-bottom: 17px;
+    font-size: 19px;
+}
+
+.spark-premium .grafica img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    cursor: zoom-in;
+    transition: transform .2s;
+}
+
+.spark-premium .grafica img:hover {
+    transform: scale(1.015);
+}
+
+.spark-premium .grafica img:focus-visible {
+    outline: 3px solid #b95e88;
+    outline-offset: 5px;
+}
+
+.spark-premium .grafica p {
+    color: #8d7d94;
+    font-size: 13px;
+    margin-top: 14px;
+}
+
+.spark-premium .seccion-titulo {
+    margin-top: 38px;
+    color: #493650;
+    font-size: 27px;
+}
+
+.spark-premium .mensaje {
+    padding: 14px 19px;
+    border-radius: 14px;
+    background: #f4eafa;
+    color: #765d88;
+}
+
+/* PAGINAS EXPLICATIVAS */
+
+.spark-premium .enlaces-spark {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin: 25px 0 40px;
+}
+
+.spark-premium .enlace-spark {
+    display: block;
+    padding: 26px;
+    background: white;
+    border: 1px solid #f1e7f0;
+    border-radius: 22px;
+    box-shadow: 0 12px 35px rgba(92,68,105,.07);
+    text-decoration: none;
+    color: #594464;
+    transition: transform .2s;
+}
+
+.spark-premium .enlace-spark:hover {
+    transform: translateY(-5px);
+}
+
+.spark-premium .enlace-spark strong {
+    display: block;
+    color: #ae5b86;
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.spark-premium .enlace-spark span {
+    color: #897b91;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* VISOR DE GRAFICAS */
+
+.spark-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: rgba(30,20,39,.88);
+    backdrop-filter: blur(10px);
+}
+
+.spark-modal.abierto {
+    display: flex;
+}
+
+.spark-modal-contenido {
+    position: relative;
+    width: min(1100px, 96vw);
+    max-height: 94vh;
+    overflow: auto;
+    padding: 25px;
+    border-radius: 24px;
+    background: white;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(0,0,0,.3);
+}
+
+.spark-modal-contenido h2 {
+    color: #594464;
+    padding-right: 40px;
+    margin-bottom: 18px;
+}
+
+.spark-modal-contenido img {
+    display: block;
+    width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.spark-cerrar {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: #f8e1eb;
+    color: #9f4b73;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+@media (max-width: 950px) {
+    .spark-premium .indicadores {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .spark-premium .enlaces-spark {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .spark-premium .indicadores,
+    .spark-premium .graficas {
+        grid-template-columns: 1fr;
+    }
+
+    .spark-premium .page-head {
+        padding: 27px 22px;
+    }
+
+    .spark-premium .dashboard {
+        padding: 0 15px 40px;
+    }
+
+    .spark-modal {
+        padding: 10px;
+    }
+
+    .spark-modal-contenido {
+        padding: 18px;
+    }
+}
+
+/* =========================================
+   PAGINAS EXPLICATIVAS DE APACHE SPARK
+========================================= */
+
+.spark-premium .spark-subnav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 25px 0 30px;
+}
+
+.spark-premium .spark-subnav a {
+    padding: 12px 18px;
+    border-radius: 13px;
+    background: white;
+    border: 1px solid #efdfed;
+    color: #765d88;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .2s;
+}
+
+.spark-premium .spark-subnav a:hover,
+.spark-premium .spark-subnav a.actual {
+    background: #f8dce9;
+    color: #a75078;
+}
+
+.spark-premium .spark-bloque {
+    padding: 34px;
+    margin: 25px 0;
+    background: white;
+    border: 1px solid #f1e7f0;
+    border-radius: 25px;
+    box-shadow: 0 12px 35px rgba(92,68,105,.07);
+}
+
+.spark-premium .spark-bloque h2 {
+    margin-bottom: 17px;
+    color: #594464;
+    font-size: 25px;
+}
+
+.spark-premium .spark-bloque h3 {
+    color: #ae5b86;
+    margin-bottom: 10px;
+}
+
+.spark-premium .spark-bloque p,
+.spark-premium .spark-bloque li {
+    color: #75697e;
+    line-height: 1.85;
+}
+
+.spark-premium .spark-bloque ul {
+    padding-left: 23px;
+}
+
+.spark-premium .spark-pasos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.spark-premium .spark-paso {
+    padding: 27px;
+    border: 1px solid #f0e3ef;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #fff, #fff5fa);
+}
+
+.spark-premium .spark-numero {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 18px;
+    border-radius: 14px;
+    background: #f8dce9;
+    color: #a75078;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.spark-premium .spark-paso h3 {
+    color: #594464;
+    margin-bottom: 10px;
+}
+
+.spark-premium .spark-paso p {
+    color: #82768b;
+    line-height: 1.75;
+    font-size: 14px;
+}
+
+.spark-premium .spark-diagrama {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.spark-premium .spark-nodo {
+    flex: 1 1 170px;
+    max-width: 250px;
+    padding: 23px 15px;
+    border-radius: 19px;
+    background: linear-gradient(135deg, #fce8f1, #f0e7fa);
+    border: 1px solid #eed9ed;
+    text-align: center;
+}
+
+.spark-premium .spark-nodo strong {
+    display: block;
+    color: #765078;
+    font-size: 17px;
+    margin-bottom: 9px;
+}
+
+.spark-premium .spark-nodo span {
+    color: #89788e;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.spark-premium .spark-flecha {
+    display: flex;
+    align-items: center;
+    color: #b976a0;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.spark-premium .spark-dato {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 5px;
+    border-radius: 12px;
+    background: #f6eafa;
+    color: #765d88;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.spark-premium .spark-aviso {
+    margin: 25px 0;
+    padding: 22px 25px;
+    border-left: 4px solid #c77a9e;
+    border-radius: 13px;
+    background: #fff1f7;
+    color: #765d88;
+    line-height: 1.8;
+}
+
+.spark-premium .spark-tabla {
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid #f0e3ef;
+    border-radius: 17px;
+}
+
+.spark-premium .spark-tabla table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+}
+
+.spark-premium .spark-tabla th {
+    padding: 17px;
+    text-align: left;
+    background: #f9edf4;
+    color: #8f4d70;
+}
+
+.spark-premium .spark-tabla td {
+    padding: 17px;
+    border-bottom: 1px solid #f3edf4;
+    color: #75697e;
+}
+
+.spark-premium .spark-volver {
+    display: inline-block;
+    padding: 14px 22px;
+    margin: 15px 0 35px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #d57fa5, #b95e88);
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@media (max-width: 700px) {
+    .spark-premium .spark-pasos {
+        grid-template-columns: 1fr;
+    }
+
+    .spark-premium .spark-bloque {
+        padding: 24px 20px;
+    }
+
+    .spark-premium .spark-flecha {
+        display: none;
+    }
+
+    .spark-premium .spark-nodo {
+        max-width: none;
+    }
+}
