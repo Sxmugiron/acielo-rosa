@@ -485,20 +485,3 @@ Desde el ámbito académico, el proyecto representa una aplicación práctica de
 
 ---
 
-## 18. Repositorio
-
-**Proyecto:** WEBACIELO — Fundación Acielo Rosa
-
-**Repositorio:** https://github.com/Sxmugiron/acielo-rosa
-
-**Rama principal:** `main`
-
-**Última integración documentada:** `bec6212` — Agregar frontend completo de WEBACIELO.
-
-**Año:** 2026
-
----
-
-**WEBACIELO — Sistema de Gestión para la Fundación Acielo Rosa**
-
-*Proyecto académico de desarrollo web, microservicios e infraestructura tecnológica.*
